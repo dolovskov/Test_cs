@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tactical Ops">
+<meta name="theme-color" content="#0e0c0a">
+<title>TACTICAL/OPS — CS2 Tactics</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' fill='%230e0c0a'/><circle cx='90' cy='90' r='60' fill='none' stroke='%23d4733a' stroke-width='8'/><circle cx='90' cy='90' r='8' fill='%23d4733a'/><line x1='90' y1='20' x2='90' y2='40' stroke='%23d4733a' stroke-width='8'/><line x1='90' y1='140' x2='90' y2='160' stroke='%23d4733a' stroke-width='8'/><line x1='20' y1='90' x2='40' y2='90' stroke='%23d4733a' stroke-width='8'/><line x1='140' y1='90' x2='160' y2='90' stroke='%23d4733a' stroke-width='8'/></svg>">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body {
+  background: #0e0c0a;
+  color: #f5e9d3;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+button {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.mono {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+}
+.app {
+  max-width: 640px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #0e0c0a;
+  border-bottom: 2px solid #44403c;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.header-icon, .header-back {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.header-icon {
+  border: 1px solid #d4733a;
+  background: #1c1917;
+}
+.header-back {
+  margin-left: -8px;
+}
+.header-back:active {
+  background: #292524;
+}
+.header-title-block { flex: 1; min-width: 0; }
+.header-title {
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #fafaf9;
+}
+.header-title .accent { color: #d4733a; }
+.header-sub {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  color: #d6d3d1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.header-reset {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #d6d3d1;
+  border: 1px solid #57534e;
+  padding: 4px 8px;
+  flex-shrink: 0;
+}
+.header-reset:active { color: #d4733a; }
+
+/* Main content */
+.main {
+  padding: 24px 16px 40px;
+}
+.step-label {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  color: #d6d3d1;
+  letter-spacing: 0.15em;
+  margin-bottom: 4px;
+}
+.step-title {
+  font-family: ui-monospace, monospace;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fafaf9;
+  margin-bottom: 24px;
+}
+.step-title .accent { color: #d4733a; }
+
+/* Cards (map/round/tactic list items) */
+.card-list { display: flex; flex-direction: column; gap: 12px; }
+.card {
+  display: block;
+  width: 100%;
+  background: #1c1917;
+  border: 1px solid #57534e;
+  padding: 16px;
+  transition: border-color 0.15s;
+}
+.card:active { border-color: #d4733a; }
+.card.disabled { opacity: 0.4; }
+
+.card-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.card-thumb {
+  width: 56px;
+  height: 56px;
+  border: 1px solid #d4733a;
+  background: #0e0c0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #d4733a;
+  flex-shrink: 0;
+}
+.card.disabled .card-thumb { border-color: #44403c; color: #78716c; }
+.card-body { flex: 1; min-width: 0; }
+.card-title {
+  font-family: ui-monospace, monospace;
+  font-size: 17px;
+  font-weight: 700;
+  color: #fafaf9;
+}
+.card.disabled .card-title { color: #a8a29e; }
+.card-meta {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  color: #a8a29e;
+  letter-spacing: 0.1em;
+  margin-top: 2px;
+}
+.card-arrow {
+  color: #d4733a;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.card-lock {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #a8a29e;
+  flex-shrink: 0;
+}
+
+/* Round type card */
+.round-card-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.round-info { flex: 1; }
+.round-name-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.round-name {
+  font-family: ui-monospace, monospace;
+  font-size: 17px;
+  font-weight: 700;
+  color: #fafaf9;
+}
+.round-sub {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  color: #d6d3d1;
+}
+.round-desc {
+  font-size: 12px;
+  color: #e7e5e4;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+.round-count {
+  text-align: right;
+  flex-shrink: 0;
+}
+.round-count-label {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  color: #d6d3d1;
+}
+.round-count-num {
+  font-family: ui-monospace, monospace;
+  font-size: 24px;
+  font-weight: 700;
+  color: #d4733a;
+}
+
+/* Side select buttons */
+.side-btn {
+  display: block;
+  width: 100%;
+  background: #1c1917;
+  padding: 20px;
+  border: 2px solid;
+  transition: border-color 0.15s;
+}
+.side-btn.t { border-color: #9a3412; }
+.side-btn.ct { border-color: #1e40af; }
+.side-btn.t:active { border-color: #fb923c; }
+.side-btn.ct:active { border-color: #60a5fa; }
+.side-btn-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.side-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.side-btn.t .side-icon { background: #1c0a05; border: 1px solid #fb923c; color: #fb923c; }
+.side-btn.ct .side-icon { background: #0a1428; border: 1px solid #60a5fa; color: #60a5fa; }
+.side-name {
+  font-family: ui-monospace, monospace;
+  font-size: 19px;
+  font-weight: 700;
+}
+.side-btn.t .side-name { color: #fed7aa; }
+.side-btn.ct .side-name { color: #dbeafe; }
+.side-meta {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.side-btn.t .side-meta { color: #fdba74; }
+.side-btn.ct .side-meta { color: #93c5fd; }
+
+/* Map diagram container */
+.map-container {
+  background: #1c1917;
+  border: 1px solid #57534e;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+.map-label {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  color: #d6d3d1;
+  letter-spacing: 0.15em;
+  margin-bottom: 8px;
+}
+
+/* Tactic list */
+.tactic-card {
+  display: block;
+  width: 100%;
+  background: #1c1917;
+  border: 1px solid #57534e;
+  padding: 16px;
+  transition: border-color 0.15s;
+}
+.tactic-card:active { border-color: #d4733a; }
+.tactic-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.tactic-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.tactic-num {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  color: #d6d3d1;
+  flex-shrink: 0;
+}
+.tactic-name {
+  font-family: ui-monospace, monospace;
+  font-size: 17px;
+  font-weight: 700;
+  color: #fafaf9;
+}
+.tactic-tag {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  color: #d4733a;
+  letter-spacing: 0.1em;
+  padding-left: 28px;
+  margin-bottom: 4px;
+}
+.tactic-desc {
+  font-size: 12px;
+  color: #e7e5e4;
+  line-height: 1.5;
+  padding-left: 28px;
+}
+.tactic-utility {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+  padding-left: 28px;
+}
+
+/* Difficulty badge */
+.diff-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  border: 1px solid;
+  flex-shrink: 0;
+}
+.diff-easy { background: rgba(6,78,59,0.6); border-color: #10b981; color: #6ee7b7; }
+.diff-medium { background: rgba(120,53,15,0.6); border-color: #f59e0b; color: #fcd34d; }
+.diff-hard { background: rgba(136,19,55,0.6); border-color: #f43f5e; color: #fda4af; }
+
+/* Utility chip */
+.util-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: #292524;
+  border: 1px solid #57534e;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  color: #f5f5f4;
+}
+.util-chip svg { width: 12px; height: 12px; flex-shrink: 0; }
+.util-chip.smoke svg { color: #e7e5e4; }
+.util-chip.flash svg { color: #fde047; }
+.util-chip.molly svg { color: #fb923c; }
+.util-chip.he svg { color: #f87171; }
+
+/* Tactic detail */
+.detail-section {
+  margin-bottom: 20px;
+}
+.detail-title-block {
+  margin-bottom: 16px;
+}
+.detail-breadcrumb {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  color: #d6d3d1;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+.detail-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.detail-title {
+  font-family: ui-monospace, monospace;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fafaf9;
+  line-height: 1.2;
+}
+.detail-tag {
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  color: #d4733a;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.detail-desc {
+  font-size: 14px;
+  color: #f5f5f4;
+  line-height: 1.5;
+}
+
+.section-box {
+  background: #1c1917;
+  border: 1px solid #57534e;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.section-box.buy {
+  border-left: 4px solid #d4733a;
+}
+.section-box.tips {
+  background: rgba(66,32,6,0.3);
+  border-color: #a16207;
+}
+.section-label {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  color: #d6d3d1;
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
+}
+.section-label.tips-label { color: #fcd34d; }
+.buy-text {
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  color: #fafaf9;
+  line-height: 1.5;
+}
+
+/* Roles */
+.role-list { display: flex; flex-direction: column; }
+.role-item {
+  display: flex;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #44403c;
+  margin-bottom: 12px;
+}
+.role-item:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+.role-num {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: 1px solid #d4733a;
+  background: #1c0a05;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fdba74;
+}
+.role-body { flex: 1; min-width: 0; }
+.role-name {
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fed7aa;
+  margin-bottom: 4px;
+}
+.role-task {
+  font-size: 12px;
+  color: #f5f5f4;
+  line-height: 1.5;
+}
+
+/* Execute steps */
+.exec-list { display: flex; flex-direction: column; gap: 12px; }
+.exec-item {
+  display: flex;
+  gap: 12px;
+}
+.exec-num {
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: #d4733a;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.exec-text {
+  font-size: 12px;
+  color: #f5f5f4;
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* Tips */
+.tips-list { display: flex; flex-direction: column; gap: 8px; }
+.tip-item {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  color: #f5f5f4;
+  line-height: 1.5;
+}
+.tip-arrow { color: #fcd34d; flex-shrink: 0; }
+
+.empty-state {
+  color: #d6d3d1;
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  padding: 24px;
+  border: 1px solid #57534e;
+  text-align: center;
+  background: #1c1917;
+}
+.footer-note {
+  text-align: center;
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  color: #a8a29e;
+  letter-spacing: 0.1em;
+  padding-top: 8px;
+}
+.intro-note {
+  margin-top: 16px;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  color: #d6d3d1;
+  letter-spacing: 0.05em;
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div style="padding:24px;font-family:ui-monospace,monospace;color:#f5e9d3">
+    <div style="font-size:13px;font-weight:700;letter-spacing:0.2em;margin-bottom:8px">TACTICAL<span style="color:#d4733a">/</span>OPS</div>
+    <div style="font-size:11px;color:#d6d3d1;margin-bottom:24px">ЗАГРУЗКА...</div>
+    <div style="font-size:12px;color:#fcd34d;line-height:1.6;border:1px solid #a16207;background:rgba(66,32,6,0.3);padding:16px">
+      Если ты видишь это сообщение и оно не пропадает — значит браузер заблокировал JavaScript. Открой файл в Safari напрямую (не в Telegram, не в почте). Сохрани файл в приложение «Файлы» (Files) и открой его оттуда в Safari.
+    </div>
+  </div>
+</div>
+<noscript>
+  <div style="padding:24px;font-family:sans-serif;color:#f5e9d3">
+    <h2>JavaScript отключён</h2>
+    <p>Этому приложению нужен JavaScript. Включи JavaScript в настройках браузера или открой файл в Safari.</p>
+  </div>
+</noscript>
+
+<script>
+// ============================================================
+// SVG ICONS
+// ============================================================
+const ICONS = {
+  back: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>',
+  target: '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d4733a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+  bomb: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="13" r="9"/><path d="M14.35 4.65 16.3 2.7a2.41 2.41 0 0 1 3.4 0l1.6 1.6a2.4 2.4 0 0 1 0 3.4l-1.95 1.95"/><path d="m22 2-1.5 1.5"/></svg>',
+  users: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  lock: '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+  cloud: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>',
+  flame: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>',
+  zap: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+  bomb_sm: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="13" r="9"/></svg>'
+};
+
+// ============================================================
+// MAPS
+// ============================================================
+const MAPS = [
+  { id: "mirage", name: "Mirage", code: "DE_MIRAGE", available: true },
+  { id: "dust2", name: "Dust 2", code: "DE_DUST2", available: true },
+  { id: "inferno", name: "Inferno", code: "DE_INFERNO", available: false },
+  { id: "ancient", name: "Ancient", code: "DE_ANCIENT", available: false },
+  { id: "anubis", name: "Anubis", code: "DE_ANUBIS", available: false },
+  { id: "nuke", name: "Nuke", code: "DE_NUKE", available: false },
+  { id: "train", name: "Train", code: "DE_TRAIN", available: false },
+];
+
+const ROUND_TYPES = [
+  { id: "pistol", name: "Пистолетка", sub: "Pistol round", desc: "$800 — утилка ограничена, ставка на координацию" },
+  { id: "force", name: "Форс", sub: "Force buy", desc: "Усиленный пистоль / SMG / Scout, мало гранат" },
+  { id: "fullbuy", name: "Фул-бай", sub: "Full buy", desc: "Полная покупка: рифлы, броня, утилка" },
+];
+
+// ============================================================
+// MAP DIAGRAMS (SVG markup)
+// ============================================================
+function getMapDiagramSVG(mapId) {
+  const siteFill = "#3a2418";
+  const siteStroke = "#c97d3a";
+  const passFill = "#1f1d1a";
+  const passStroke = "#665e52";
+  const tFill = "#4a2818";
+  const tStroke = "#d4733a";
+  const ctFill = "#1a2838";
+  const ctStroke = "#4a8cc7";
+
+  if (mapId === "mirage") {
+    return `<svg viewBox="0 0 400 320" style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="400" height="320" fill="#0e0c0a"/>
+      <rect x="270" y="20" width="115" height="70" fill="${siteFill}" stroke="${siteStroke}" stroke-width="2"/>
+      <text x="327" y="48" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ПЛЕНТ А</text>
+      <text x="327" y="63" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(дефолт, трипл,</text>
+      <text x="327" y="74" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">сэндвич, тетрис)</text>
+      <rect x="295" y="0" width="65" height="14" fill="${ctFill}" stroke="${ctStroke}" stroke-width="1"/>
+      <text x="327" y="11" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" font-weight="700" fill="#9ec5e8">КТ-РЕСП</text>
+      <rect x="365" y="20" width="20" height="40" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="375" y="44" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0" transform="rotate(-90 375 44)">ТИКЕТ</text>
+      <rect x="240" y="95" width="50" height="35" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="265" y="113" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="600" fill="#e0d4be">ДЖАНГЛ</text>
+      <text x="265" y="125" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">КОН/ГОЛОВЫ</text>
+      <rect x="295" y="95" width="55" height="50" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="322" y="118" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="600" fill="#e0d4be">КОВРЫ</text>
+      <text x="322" y="130" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(палас)</text>
+      <rect x="240" y="135" width="50" height="35" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="265" y="153" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="600" fill="#e0d4be">ЯМА</text>
+      <text x="265" y="165" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(рампа)</text>
+      <rect x="155" y="135" width="80" height="65" fill="${passFill}" stroke="${passStroke}" stroke-width="1.5"/>
+      <text x="195" y="160" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">МИД</text>
+      <text x="195" y="174" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">белые ящики</text>
+      <rect x="155" y="100" width="50" height="30" fill="${ctFill}" stroke="${ctStroke}" stroke-width="1"/>
+      <text x="180" y="120" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#9ec5e8">ОКНО</text>
+      <rect x="210" y="100" width="55" height="30" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="237" y="115" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">ПАРАПЕТ</text>
+      <text x="237" y="125" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(шорт)</text>
+      <rect x="155" y="205" width="80" height="14" fill="#15110d" stroke="${passStroke}" stroke-width="1" stroke-dasharray="2 2"/>
+      <text x="195" y="216" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">АНДЕР (подвал)</text>
+      <rect x="15" y="60" width="115" height="80" fill="${siteFill}" stroke="${siteStroke}" stroke-width="2"/>
+      <text x="72" y="92" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ПЛЕНТ Б</text>
+      <text x="72" y="107" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(дефолт, лавка,</text>
+      <text x="72" y="118" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">машина/вэн)</text>
+      <rect x="15" y="20" width="80" height="35" fill="${ctFill}" stroke="${ctStroke}" stroke-width="1"/>
+      <text x="55" y="38" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="600" fill="#9ec5e8">КУХНЯ</text>
+      <text x="55" y="50" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#9ec5e8">(магазин)</text>
+      <rect x="100" y="30" width="28" height="22" fill="${ctFill}" stroke="${ctStroke}" stroke-width="1"/>
+      <text x="114" y="44" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#9ec5e8">ОКНО</text>
+      <rect x="15" y="150" width="115" height="40" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="72" y="167" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="600" fill="#e0d4be">АПСЫ</text>
+      <text x="72" y="180" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(апартаменты)</text>
+      <rect x="15" y="200" width="60" height="30" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="45" y="218" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">ДОМ / ТВ</text>
+      <rect x="135" y="270" width="130" height="40" fill="${tFill}" stroke="${tStroke}" stroke-width="2"/>
+      <text x="200" y="294" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" font-weight="700" fill="#f0a87a">Т-РЕСПАВН</text>
+      <line x1="200" y1="270" x2="195" y2="200" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="205" y="240" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">↑ мид</text>
+      <line x1="245" y1="275" x2="322" y2="145" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="280" y="220" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">→ ковры</text>
+      <line x1="155" y1="275" x2="50" y2="225" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="65" y="260" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">← дом</text>
+      <text x="385" y="315" text-anchor="end" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#665e52">DE_MIRAGE</text>
+    </svg>`;
+  }
+
+  if (mapId === "dust2") {
+    return `<svg viewBox="0 0 400 320" style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="400" height="320" fill="#0e0c0a"/>
+      <rect x="270" y="20" width="115" height="65" fill="${siteFill}" stroke="${siteStroke}" stroke-width="2"/>
+      <text x="327" y="48" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ПЛЕНТ А</text>
+      <text x="327" y="63" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(дефолт, бокс,</text>
+      <text x="327" y="74" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">гусь, рампа)</text>
+      <rect x="160" y="0" width="100" height="14" fill="${ctFill}" stroke="${ctStroke}" stroke-width="1"/>
+      <text x="210" y="11" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" font-weight="700" fill="#9ec5e8">КТ-РЕСПАВН</text>
+      <rect x="220" y="90" width="55" height="30" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="247" y="105" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="600" fill="#e0d4be">ШОРТ</text>
+      <text x="247" y="116" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(катвок)</text>
+      <rect x="280" y="95" width="105" height="30" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="332" y="115" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="600" fill="#e0d4be">ЛОНГ (длина)</text>
+      <rect x="285" y="130" width="55" height="22" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="312" y="144" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">ЯМА/ПИТ</text>
+      <rect x="160" y="100" width="55" height="115" fill="${passFill}" stroke="${passStroke}" stroke-width="1.5"/>
+      <text x="187" y="155" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">МИД</text>
+      <text x="187" y="170" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(икс-бокс)</text>
+      <rect x="170" y="220" width="35" height="15" fill="#15110d" stroke="${passStroke}" stroke-width="1"/>
+      <text x="187" y="231" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">ДВЕРИ</text>
+      <rect x="100" y="200" width="55" height="35" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="127" y="216" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">НИЖНЯЯ</text>
+      <text x="127" y="227" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">ТЕМКА</text>
+      <rect x="35" y="200" width="65" height="35" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="67" y="216" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="600" fill="#e0d4be">ВЕРХНЯЯ</text>
+      <text x="67" y="228" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">темка</text>
+      <rect x="15" y="100" width="105" height="85" fill="${siteFill}" stroke="${siteStroke}" stroke-width="2"/>
+      <text x="67" y="135" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ПЛЕНТ Б</text>
+      <text x="67" y="150" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(танцпол,</text>
+      <text x="67" y="161" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">машина, окно,</text>
+      <text x="67" y="172" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">дальний угол)</text>
+      <rect x="135" y="270" width="130" height="40" fill="${tFill}" stroke="${tStroke}" stroke-width="2"/>
+      <text x="200" y="294" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" font-weight="700" fill="#f0a87a">Т-РЕСПАВН</text>
+      <line x1="245" y1="275" x2="332" y2="125" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="290" y="220" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">→ лонг</text>
+      <line x1="195" y1="270" x2="187" y2="220" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="200" y="250" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">↑ мид</text>
+      <line x1="160" y1="280" x2="70" y2="235" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="100" y="265" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">← тоннели</text>
+      <text x="385" y="315" text-anchor="end" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#665e52">DE_DUST2</text>
+    </svg>`;
+  }
+  return '';
+}
+
+// ============================================================
+// TACTICS DATA — placeholder, will be injected
+// ============================================================
+const TACTICS = {
+  // ==========================================================
+  // ТЕРРОРИСТЫ — ПИСТОЛЕТКА
+  // ==========================================================
+  "mirage-T-pistol": [
+    {
+      id: "m-t-p-1",
+      name: "Раш андером",
+      diff: "easy",
+      tag: "Самая популярная пистолетка",
+      desc: "Быстрый выход на А: двое идут на мид и спускаются в андер (подвал под мидом), трое заходят с ковров (паласа) сверху. Простая и проверенная пистолетная тактика.",
+      utility: ["2× смока", "1× флешка"],
+      buy: "5× Glock + 2× смока + 1× флешка + броня (1-2 игрокам)",
+      players: [
+        { role: "Игрок 1 — гренадёр", task: "Покупает смок и флешку. Идёт на мид, спускается в андер, выходит у коннектора. Кидает смок на головы (лестницу) и флешку на сайт." },
+        { role: "Игрок 2 — поддержка", task: "Покупает смок, скидывает Игроку 1. Идёт за ним через андер. Кидает смок на КТ." },
+        { role: "Игрок 3 — энтри с ковров", task: "Бежит в ковры через вход с Т-респа. Первым прыгает с балкона на дефолт когда сработают смоки." },
+        { role: "Игрок 4 — добив", task: "Идёт в ковры за Игроком 3. Прыгает следом, добивает врагов которых Игрок 3 ранил. Чистит трипл и сэндвич." },
+        { role: "Игрок 5 — бомба", task: "Третьим из ковров. Чистит файрбокс и под балконом. Ставит бомбу на дефолт." },
+      ],
+      execute: [
+        "Игроки 1-2 идут на мид (топ мид → андер), Игроки 3-5 — в ковры через вход с Т-респа. Все тихо",
+        "Игроки 3-5 собираются у балкона ковров, ждут смоков",
+        "На таймере 1:35 Игрок 1 у выхода из коннектора кидает смок на головы (лестницу)",
+        "Игрок 2 кидает смок на КТ",
+        "Игрок 1 кидает флешку через смок в сайт",
+        "Игрок 3 прыгает с балкона на дефолт первым, Игроки 4-5 за ним",
+        "Игрок 1 заходит из коннектора одновременно",
+        "Бомба на дефолт. Постплант: Игрок 5 — балкон, Игрок 1 — коннектор, остальные в сэндвиче и тетрисе",
+      ],
+      tips: [
+        "Главное — синхронность. Если игроки в коврах прыгнут раньше дымов, их перестреляют с КТ и с голов",
+        "Если Игрок 1 умирает по пути на мид — отменяй атаку, переключайся на Б",
+        "Постплант — самая сильная фаза этой тактики. Не лезьте в спам, ждите дефьюз",
+      ],
+    },
+    {
+      id: "m-t-p-2",
+      name: "Раш Б через апсы",
+      diff: "easy",
+      tag: "Если КТ стакают А",
+      desc: "Все 5 быстро в апартаменты (апсы) на Б. Минимум утилки, максимум скорости. Хорошо работает когда чувствуете что КТ ждут раш на А.",
+      utility: ["1× смок (на окно кухни)", "2× флешки"],
+      buy: "5× Glock или USP + 1× смок + 2× флешки + 2-3× броня",
+      players: [
+        { role: "Игрок 1 — энтри", task: "Первым в апсы. Прыгает в окно апы, чистит сайт." },
+        { role: "Игрок 2 — гренадёр", task: "Кидает смок на окно кухни (китчена) перед выходом из апы." },
+        { role: "Игрок 3 — флешер", task: "Кидает поп-флешку над апой в сайт перед прыжком Игрока 1." },
+        { role: "Игрок 4 — добив", task: "Прыгает сразу за энтри, добивает. Чистит лавку и машину (вэн)." },
+        { role: "Игрок 5 — бомба", task: "Последним из апы, ставит бомбу за коробками (дефолт Б или у скамейки)." },
+      ],
+      execute: [
+        "Все 5 быстро бегут в апсы через Т-респ → дом → подсадка → апсы",
+        "В апсах собираемся за углом перед окнами апы",
+        "Игрок 2 кидает смок на окно кухни (блокирует кросс)",
+        "Игрок 3 кидает флешку над окнами апы в сайт",
+        "Игрок 1 прыгает в окно сразу после флешки, Игроки 4-5 за ним",
+        "Бомба ближе к апе. Постплант: лавка, верх машины, окна апы",
+      ],
+      tips: [
+        "Если КТ стакают Б — отступайте назад в апсы, не лезьте в открытый сайт",
+        "Один игрок должен слушать коннектор — оттуда могут перетянуться с А",
+      ],
+    },
+    {
+      id: "m-t-p-3",
+      name: "Контроль мида + сплит Б",
+      diff: "medium",
+      tag: "Через информацию",
+      desc: "Берём мид через смок на окно, потом сплит на Б через шорт и апсы. Сложнее раша, но эффективнее против опытной защиты.",
+      utility: ["3× смока", "2× флешки"],
+      buy: "5× Glock + 3× смока + 2× флешки",
+      players: [
+        { role: "Игрок 1 — лидер мида", task: "Кидает смок на окно (мидовое). Идёт через топ мид к белым ящикам." },
+        { role: "Игрок 2 — поддержка мида", task: "Кидает смок на коннектор. Идёт за Игроком 1, потом поднимается на парапет (зига)." },
+        { role: "Игрок 3 — мид → шорт", task: "Через мид в шорт вместе с Игроком 2." },
+        { role: "Игрок 4 — лидер апы", task: "Идёт в апсы, ждёт сигнала. Кидает смок на дверь магазина перед выходом." },
+        { role: "Игрок 5 — добив апы", task: "За Игроком 4. Кидает флешку в сайт через окна апы." },
+      ],
+      execute: [
+        "Игрок 1 кидает смок на окно сразу с респа",
+        "Игроки 1-3 идут через топ мид, Игроки 4-5 в апсы параллельно",
+        "Игрок 2 кидает смок на коннектор когда мид взят",
+        "Игроки 2-3 поднимаются по парапету в шорт (зигу)",
+        "Когда Игроки 2-3 в шорте, дают сигнал. Игрок 5 кидает флешку, Игрок 4 — смок на дверь",
+        "Игроки из апы и из шорта заходят одновременно — зажимаем сайт с двух сторон",
+        "Бомба между коробками. Постплант: угол шорта, окна апы",
+      ],
+      tips: [
+        "Тайминг критичен — игроки в апах НЕ выходят пока шорт не зашёл",
+        "Если Игрок 1 умер при взятии мида — переключайтесь на чистый раш через апсы",
+      ],
+    },
+  ],
+
+  // ==========================================================
+  // ТЕРРОРИСТЫ — ФОРС
+  // ==========================================================
+  "mirage-T-force": [
+    {
+      id: "m-t-f-1",
+      name: "Контакт Б",
+      diff: "easy",
+      tag: "Классика тильто-стана",
+      desc: "Простая тактика которую часто используют когда команда уже психует. Идём всей толпой в апсы и выходим на сайт по контакту. Хороша для пистолеток, эко и форсов.",
+      utility: ["1× смок (опц.)", "1-2× флешки"],
+      buy: "MAC-10 × 2-3, Tec-9 / Five-Seven, броня всем",
+      players: [
+        { role: "Игрок 1 — энтри (MAC-10)", task: "Первый в окна апы или в выход на дефолт. Главная задача — контакт и первый кадр." },
+        { role: "Игрок 2 — добив через окно", task: "Прыгает в окно апы, контролит шорт со стороны сайта." },
+        { role: "Игрок 3 — выход через дверь", task: "Идёт через выход апы у дефолта. Молотов (если есть) на машину — её часто никто не проверяет." },
+        { role: "Игрок 4 — поддержка", task: "За первой волной. Добивает по контакту." },
+        { role: "Игрок 5 — бомба", task: "Последний в апу. Бомба после зачистки." },
+      ],
+      execute: [
+        "Все идут на ноге до ковров возле Б (где вход в андер)",
+        "С ковров на шифте всей командой заходим в апсы",
+        "Не отпускаем шифт пока не начнётся первая перестрелка с КТ",
+        "По контакту — все одновременно прыгают на сайт. Защита в меньшинстве не успевает реагировать",
+        "Игроки 1 и 4 выходят со стороны двери на сайт",
+        "Игроки 2 и 3 прыгают в окна апы и контролят шорт",
+        "Молотов на машину обязателен — иначе оттуда расстреляют",
+        "Бомба за коробками",
+      ],
+      tips: [
+        "Машина (вэн) — главная проблема. Каждый думает что её проверит тиммейт, и в итоге никто не проверяет. Выделите ответственного",
+        "Отлично работает если несколько раундов подряд бились на А — защита расслабляется",
+        "Не задерживайтесь в апсах — кинут молотов и вы все сгорите",
+      ],
+    },
+    {
+      id: "m-t-f-2",
+      name: "Стак в ковры (палас)",
+      diff: "medium",
+      tag: "Эффект неожиданности",
+      desc: "Все 5 быстро в ковры. Неожиданная агрессия из паласа ломает сетап КТ. Хороший форс при близких респах к А.",
+      utility: ["2× смока", "1× флешка", "1× молотов"],
+      buy: "Galil × 2-3 / MAC-10, Tec-9, броня всем",
+      players: [
+        { role: "Игрок 1 — энтри (Galil)", task: "Первый в ковры. Прыгает с балкона на дефолт." },
+        { role: "Игрок 2 — добив", task: "Сразу за Игроком 1. Чистит трипл и под балконом." },
+        { role: "Игрок 3 — гренадёр", task: "Кидает смок на КТ с балкона ковров и смок на головы (через стену)." },
+        { role: "Игрок 4 — флешер", task: "Кидает поп-флешку с балкона в сайт перед прыжком." },
+        { role: "Игрок 5 — контроль ямы + бомба", task: "Контролит яму снизу — следит чтобы КТ из ямы не зашли в спину. Поднимается в ковры последним." },
+      ],
+      execute: [
+        "Все 5 бегут в ковры через вход с Т-респа, не шумят",
+        "Игрок 5 остаётся внизу под коврами и слушает яму",
+        "В коврах Игрок 3 кидает смок на КТ и смок на головы",
+        "Игрок 4 кидает поп-флешку с балкона в сайт",
+        "Игроки 1-2 прыгают с балкона сразу после флешки",
+        "Игрок 5 поднимается в ковры и идёт следом",
+        "Бомба на дефолт. Постплант: балкон, тетрис, под балконом",
+      ],
+      tips: [
+        "Если КТ агрессивно играют ковры — этот форс провалится. Слушайте звуки в коврах",
+        "Galil сильнее MAC-10 на А — углы открытые, дистанция средняя",
+      ],
+    },
+  ],
+
+  // ==========================================================
+  // ТЕРРОРИСТЫ — ФУЛБАЙ
+  // ==========================================================
+  "mirage-T-fullbuy": [
+    {
+      id: "m-t-fb-1",
+      name: "Раскид А с ямы",
+      diff: "medium",
+      tag: "Дефолт ММ и FACEIT",
+      desc: "Самая популярная фулбай-тактика в матчмейкинге и на Faceit. Минимум фантазии, максимум результата. Бомбардируем плент дымами, потом заходим всей командой через яму.",
+      utility: ["4× смока", "3-4× флешки", "1× молотов"],
+      buy: "5× AK + броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — гренадёр (Т-респ)", task: "Главный по дымам. Кидает смок на КТ через джамптроу, потом смок на головы (лестницу)." },
+        { role: "Игрок 2 — гренадёр 2", task: "Кидает смоки на лавку и джангл. Молотов в файрбокс." },
+        { role: "Игрок 3 — энтри", task: "Первый в яму. После раскида прыгает на дефолт." },
+        { role: "Игрок 4 — добив с ямы", task: "За Игроком 3. Чистит трипл, между (сэндвич), тетрис." },
+        { role: "Игрок 5 — лурк/контроль мида", task: "Контроль топ мида в начале раунда. Может закинуть смок на окно. Потом приходит на А или остаётся лурком." },
+      ],
+      execute: [
+        "0:00-1:30: Игрок 5 контролит мид, остальные собираются у ямы",
+        "Игрок 1 кидает смок на КТ через джамптроу (закрывает перетяжку с Б)",
+        "Игрок 1 кидает смок на головы (без ванвеев — играть в нём нельзя)",
+        "Игрок 2 кидает смок на лавку и смок на джангл",
+        "Игрок 2 кидает молотов в файрбокс — выкуриваем защитника",
+        "Игроки 1-2 кидают флешки через смоки в сайт",
+        "Игроки 3-4 выходят из ямы, остальные за ними",
+        "Бомба на дефолт. Постплант: тикет/балкон, сэндвич, коннектор",
+      ],
+      tips: [
+        "Внимание: защита может бросить осколочную (HE) и развеять дым. Готовьтесь",
+        "Порядок дымов важен: КТ первым (она самая дальняя), потом головы, потом джангл",
+        "Если в окне сидит снайпер — сначала закройте окно, потом всё остальное",
+      ],
+    },
+    {
+      id: "m-t-fb-2",
+      name: "Сплит А",
+      diff: "hard",
+      tag: "Атака с трёх направлений",
+      desc: "Сплит — это заход на плент с двух (или трёх) направлений одновременно. Рассеивает концентрацию защиты и создаёт перекрёстный огонь. Используется на про-сцене, в ММ и на Faceit.",
+      utility: ["4× смока", "4× флешки", "2× молотова"],
+      buy: "5× AK + AWP опц., броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — выход из ковров", task: "Идёт в ковры с молотовом. Кидает молотов под ковры (под балкон) — там часто сидят КТ в засаде. Прыгает с балкона." },
+        { role: "Игрок 2 — выход из ямы (1)", task: "Один из двух игроков с ямы. Может выходить даже первым, до сплита. Зачищает плент и говорит игроку в коврах что выход безопасен." },
+        { role: "Игрок 3 — выход из ямы (2)", task: "Второй с ямы. Идёт за Игроком 2, добивает." },
+        { role: "Игрок 4 — выход через коннектор", task: "Главное — закрыть окно дымом в начале раунда (иначе через мид не пройти). Идёт через мид → андер → коннектор. После бомбы остаётся в коннекторе как уши команды и страхует от шорта." },
+        { role: "Игрок 5 — поддержка коннектора", task: "Идёт за Игроком 4 через мид. Помогает контролировать кон." },
+      ],
+      execute: [
+        "В начале раунда Игрок 4 закрывает окно дымом — без этого мид не пройти",
+        "Игроки 4-5 идут на мид, спускаются в андер, выходят к коннектору",
+        "Игроки 2-3 заходят в яму",
+        "Игрок 1 идёт в ковры через вход с Т-респа",
+        "Игроки 2-3 первыми выходят из ямы и зачищают то что видят",
+        "Дают сигнал Игроку 1: «можешь выходить, ухо чистое»",
+        "Игрок 1 кидает молотов под балкон, прыгает на дефолт",
+        "Игроки 4-5 выходят с коннектора одновременно",
+        "Бомба на дефолт. Постплант: Игрок 4 в коннекторе (уши), остальные в кросс",
+      ],
+      tips: [
+        "Игроку в коврах нужен молотов под ковры обязательно — оттуда часто префаят",
+        "Игрок в коннекторе после планта — самая важная роль. Он услышит любую перетяжку с Б и предупредит команду",
+        "Можно сделать вариант: один игрок не идёт в коннектор, а лезет в окно через подсадку и обходит через джангл — полная неожиданность",
+      ],
+    },
+    {
+      id: "m-t-fb-3",
+      name: "Форточник",
+      diff: "hard",
+      tag: "Атака через мидовое окно",
+      desc: "Хитрая тактика которая ловит защиту врасплох. Один игрок залезает в окно через подсадку (без шума прыжка) и обходит сайт оттуда, где его никто не ждёт.",
+      utility: ["2-3× смока", "2× флешки"],
+      buy: "5× AK + AWP (для контроля окна) + броня + шлем",
+      players: [
+        { role: "Игрок 1 — снайпер на окне", task: "Главная роль. Контролит окно с AWP (или с автоматом). Если в окне сидит вражеский снайпер — нужно его убить или отпугнуть. Без этого подсадка провалится." },
+        { role: "Игрок 2 — нижний подсадки", task: "Подсаживает Игрока 3. После подсадки идёт к коннектору, проверяет шорт прыжками, контролирует кон." },
+        { role: "Игрок 3 — верхний подсадки", task: "Залезает в окно. Выходит через джангл/коннектор и заходит на А с тыла. Главная задача — сюрпризнуть КТ с неожиданной стороны и подстрелить нескольких в спину." },
+        { role: "Игрок 4 — отвлечение в яме", task: "Имитирует выход с ямы — стреляет, кидает гранаты, шумит. Отвлекает внимание защиты от мида." },
+        { role: "Игрок 5 — отвлечение в яме (2)", task: "Вместе с Игроком 4 имитирует контакт. После того как Игрок 3 зайдёт в тыл — переходит в реальную атаку с ямы." },
+      ],
+      execute: [
+        "Игрок 1 (снайпер) идёт пикать окно. Если защитник в окне — дуэль",
+        "Если окно чистое или вражеский снайпер убран — Игроки 2 и 3 подходят под окно",
+        "Игрок 2 подсаживает Игрока 3, тот залезает в окно",
+        "Игроки 4-5 в это время шумят на яме (имитируют атаку)",
+        "Игрок 3 проходит через окно, выходит через джангл — теперь он за спинами защиты",
+        "Игрок 2 закрывает коннектор дымом и контролит шорт прыжками",
+        "Игрок 3 расстреливает спины КТ. Игроки 4-5 переходят в реальную атаку с ямы",
+        "Бомба на дефолт. Постплант стандартный",
+      ],
+      tips: [
+        "Без снайперского контроля окна тактика умрёт — Игроку 3 нужна гарантия что его не подстрелят при лазании",
+        "Можно научиться запрыгивать в окно без подсадки — тогда не нужен второй игрок снизу",
+        "Перед подсадкой обязательно закройте коннектор дымом, чтобы на шум не прибежал КТ",
+      ],
+    },
+    {
+      id: "m-t-fb-4",
+      name: "Сплит Б",
+      diff: "hard",
+      tag: "Зажим Б с двух сторон",
+      desc: "Сплит на Б через ковры (выход на сайт через апсы) и через шорт. Размывает защиту и создаёт перекрёстный огонь. Главная сложность — пройти мид незаметно, потому что вся карта хорошо просматривается с А.",
+      utility: ["4-5× смоков", "3× флешки", "1-2× молотова"],
+      buy: "5× AK + броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — гренадёр старта", task: "Закрывает старт мида, окно и коннектор дымами в самом начале — чтобы атака с А не видела вашего движения по парапету и шорту." },
+        { role: "Игрок 2 — мид → шорт", task: "Идёт через мид к шорту. На точке у шорта даёт сигнал команде в апсах." },
+        { role: "Игрок 3 — мид → шорт (2)", task: "С Игроком 2 через мид. Прокидывает врагам в шорте/коне инфу для апсового энтри." },
+        { role: "Игрок 4 — выход из апы", task: "Идёт в апсы. Ждёт отмашку от шорта. По сигналу выходит на сайт через окно/дверь." },
+        { role: "Игрок 5 — фейк А / лурк", task: "Шумит на А (моло на лестницу из ямы), создаёт впечатление что идёте на А. Потом лурк коннектора от перетяжки." },
+      ],
+      execute: [
+        "Игрок 5 шумит на А: моло на лестницу, выстрелы — фейк А",
+        "Игрок 1 закрывает старт, окно, коннектор смоками — атака с А не должна видеть движение",
+        "Игроки 2-3 идут через мид к шорту",
+        "Игрок 4 идёт в апсы и ждёт",
+        "Когда Игроки 2-3 дошли до точки в шорте — дают отмашку Игроку 4",
+        "Игрок 4 выходит из апы одновременно с заходом из шорта",
+        "Игроки 2-3 говорят апсам где КТ — это критично, иначе апсовый игрок не поймёт куда смотреть",
+        "Бомба на дефолт Б. Постплант: угол шорта, окна апы, лавка",
+      ],
+      tips: [
+        "Если КТ перетянет снайпера из окна в кухню — у вас будут проблемы. Снайпер делает это за пару секунд. Слушайте звуки",
+        "Сплит Б на Mirage особенно опасен из-за хорошего обзора с А — защита сразу увидит ваше движение, если вы не закроете старт",
+      ],
+    },
+    {
+      id: "m-t-fb-5",
+      name: "Полный раскид Б",
+      diff: "medium",
+      tag: "Один игрок всё кидает",
+      desc: "Все смоки на Б делает один игрок с одной точки. Команда выпадает на врага вчетвером сразу как смоки приземлятся. Альтернатива сплиту — проще, но защита читает легче.",
+      utility: ["4× смока", "1× молотов", "флешки"],
+      buy: "5× AK + броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — гренадёр", task: "Бросает все 4 смока с одной точки: на правую арку, на левую арку (отрезает перетяжку), на выход с кухни, на окно (через джамптроу). После — забегает в апсы." },
+        { role: "Игрок 2 — энтри", task: "Сразу после раскида первым в окна апы." },
+        { role: "Игрок 3 — добив", task: "За Игроком 2. Кидает молотов на машину (вэн) — туда часто никто не лезет." },
+        { role: "Игрок 4 — выход через дверь", task: "Идёт через дверь магазина (с другой стороны апы) на дефолт." },
+        { role: "Игрок 5 — бомба", task: "Бомба после зачистки. Может задымить крысиную позицию (тех кто расстреливает прыгающих из окон апы) если есть лишний смок." },
+      ],
+      execute: [
+        "Игрок 1 с одной точки кидает 4 смока: правая арка → левая арка → выход кухни → окно (джамптроу)",
+        "Команда стоит на старте у входа в апы и ждёт пока все смоки приземлятся",
+        "Сразу после последнего смока — все вчетвером заходят в апсы",
+        "Игрок 3 кидает молотов на машину (вэн) — обязательно",
+        "Флешки кидаются над коврами Б, по интуиции",
+        "Игрок 2 первым в окно апы, Игрок 4 через дверь",
+        "Бомба между коробками. Постплант стандартный",
+      ],
+      tips: [
+        "Главное преимущество — раскид делается быстро одним игроком, остальные не тратят время на броски",
+        "Не забывайте про молотов на машину — оттуда расстреливают чаще всего",
+        "Защита может развеять смок осколочной — будьте готовы",
+      ],
+    },
+  ],
+
+  // ==========================================================
+  // КТ — ПИСТОЛЕТКА
+  // ==========================================================
+  "mirage-CT-pistol": [
+    {
+      id: "m-ct-p-1",
+      name: "Стандарт пистолетки",
+      diff: "easy",
+      tag: "База",
+      desc: "Стандартная расстановка на пистолетке: контроль ключевых точек, особенно мида. Никаких рисков — играем от информации.",
+      utility: ["1× смок", "2× флешки"],
+      buy: "USP × 3, P250 × 2, броня × 4-5",
+      players: [
+        { role: "Игрок 1 — А (тикет)", task: "Сидит в тикете (будке у выхода с КТ-респа на А). Контролит яму и ковры из глубины. Главная пушка А." },
+        { role: "Игрок 2 — окно (мид)", task: "Главная пушка раунда. Пик из окна на топ мид. Может поймать любого кто решит пушнуть мид." },
+        { role: "Игрок 3 — коннектор/джангл", task: "Контролит выход с коннектора и поддерживает мид." },
+        { role: "Игрок 4 — парапет (зига)", task: "Пик с парапета на топ мид. Контролит шорт и поддерживает мид." },
+        { role: "Игрок 5 — Б (лавка/окна апы)", task: "Сидит на лавке или у окон апы со стороны кухни. Слушает раш через апсы." },
+      ],
+      execute: [
+        "Игрок 2 кидает смок на топ мид (блокирует моментальный раш)",
+        "Игрок 2 пикает окно сразу — может поймать ранний пуш с мида",
+        "Игрок 3 заходит в коннектор, проверяет ладдер рум (комнату с лестницей)",
+        "Игрок 4 пикает парапет — может поймать раш через шорт",
+        "При первом контакте — все на мид сжимают террористов",
+        "Игроки 1 и 5 ротируются по информации",
+      ],
+      tips: [
+        "На пистолетке броня важнее пушки. Игроку 5 на Б можно купить только Tec-9 без брони",
+        "Игрок 2 (окно) — самая важная роль. Он должен жить и давать инфу",
+        "USP бьёт на дальние дистанции — пользуйтесь этим, не лезьте в ближний бой",
+      ],
+    },
+    {
+      id: "m-ct-p-2",
+      name: "Агрессивный пуш в апсы",
+      diff: "medium",
+      tag: "Майнд-гейм",
+      desc: "Двое идут в апсы через магазин и ловят террористов которые обычно туда раш делают. Работает раз в полигры — раз поймали, в следующий раз вас уже там ждут.",
+      utility: ["1× молотов", "2× флешки"],
+      buy: "Five-Seven × 2 (для апсы), USP × 3, броня × 5",
+      players: [
+        { role: "Игроки 1+2 — пуш в апсы", task: "Бегут в апсы через магазин. Five-Seven обязательно для пробиваемости." },
+        { role: "Игрок 3 — окно", task: "Стандартный пик мида." },
+        { role: "Игрок 4 — А (тикет)", task: "Соло на А. Дальний холд." },
+        { role: "Игрок 5 — коннектор", task: "Холд коннектора + поддержка мида." },
+      ],
+      execute: [
+        "Игрок 1 идёт через окно магазина, Игрок 2 через дверь",
+        "Игрок 1 кидает флешку в апсы через окно",
+        "Игроки 1-2 врываются в апсы и стреляют пробегающих T",
+        "Если есть кадр и килл — отступают на сайт",
+        "Если инфы нет — Игрок 2 кидает молотов в подсадку и возвращаются",
+      ],
+      tips: [
+        "Высокий риск. Если Т уже в апсах — вы в 2 против 5",
+        "Используйте только если в предыдущих пистолетках они стабильно идут на Б",
+      ],
+    },
+  ],
+
+  // ==========================================================
+  // КТ — ФОРС
+  // ==========================================================
+  "mirage-CT-force": [
+    {
+      id: "m-ct-f-1",
+      name: "Поджим ямы",
+      diff: "medium",
+      tag: "Неожиданная агрессия",
+      desc: "Агрессивный заход в яму даёт инфу о действиях Т, отрезает один из направлений атаки. Цель — раннее преимущество за счёт неожиданности. Хорошо работает на форсах и пистолетках.",
+      utility: ["1× смок", "2× флешки", "1× молотов"],
+      buy: "MP9 × 2-3, Deagle × 1, броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — пуш ямы", task: "Под флешки агрессивно пушит яму, продвигается к Т-респу. Задача — собрать инфу, возможно убить 1-2 врагов." },
+        { role: "Игрок 2 — головы (лестница)", task: "Сидит на головах, прикрывает Игрока 1. Готов отступить если контратака. Контроль ямы и ковров." },
+        { role: "Игрок 3 — тикет", task: "Дальний холд на КТ. Поддержка с дистанции, прицел на ковры и яму." },
+        { role: "Игрок 4 — окно/коннектор", task: "Контролит мид и коннектор. Готов перетянуться на А если будет контакт." },
+        { role: "Игрок 5 — Б соло", task: "Сидит на Б один. Задерживает раш через апсы. Не пытается выиграть дуэль — сейвится если 1 против 3+." },
+      ],
+      execute: [
+        "Игрок 2 кидает флешку Игроку 1 для пуша ямы",
+        "Игрок 1 быстро идёт в яму, ищет контакт",
+        "Игроки 2-3 страхуют — готовы стрелять любого Т который попытается ответить",
+        "Если Игрок 1 убил 1-2 — отступает обратно на голову",
+        "Если контакта нет — возвращаются в стандартный сетап",
+        "При хите на Б — Игрок 5 даёт один кадр инфы и сейвится",
+      ],
+      tips: [
+        "Очень эффективно против команд которые планируют атаку и идут шаблонно",
+        "MP9 — лучшая анти-эко пушка КТ. Берите всем кто играет в близком радиусе",
+        "Игроку 5 на Б — Tec-9 / Five-Seven для близкого боя",
+      ],
+    },
+  ],
+
+  // ==========================================================
+  // КТ — ФУЛБАЙ
+  // ==========================================================
+  "mirage-CT-fullbuy": [
+    {
+      id: "m-ct-fb-1",
+      name: "Пассивная защита А",
+      diff: "easy",
+      tag: "Стандарт",
+      desc: "Самая надёжная схема: занимаем безопасные дальние позиции, замедляем атаку утилкой и дожидаемся помощи. Не лезем вперёд — даём команде время на ротации.",
+      utility: ["5× смоков", "4× флешки", "3× молотова"],
+      buy: "5× M4A4 / M4A1-S + AWP, броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — головы (лестница)", task: "Прицел на выход из ямы. Главная задача — заметить и остановить выход Т на плент. Дальний холд из глубины сайта." },
+        { role: "Игрок 2 — тикет", task: "Контролит выход из ковров. Страхует Игрока 1 на головах. Может бустнуться на тикет для пика выше дыма." },
+        { role: "Игрок 3 — джангл/коннектор", task: "Удерживает коннектор и готов помочь на А или на миду. Главная роль — быстрая ротация в зависимости от направления атаки." },
+        { role: "Игрок 4 — Б (лавка)", task: "Главный холдер апсы. Слушает раш через апы." },
+        { role: "Игрок 5 — шорт/парапет", task: "Контроль шорта и помощь миду. Может сидеть в комнате с лестницей (ладдер рум)." },
+      ],
+      execute: [
+        "Игрок 3 кидает молотов в коннектор для делея",
+        "Игрок 2 кидает смок в палас (ковры) для замедления",
+        "Игрок 4 может закинуть зажигательную в апы для контроля",
+        "AWP в окне (если есть) пикает топ мид сразу — может поймать раннюю дуэль",
+        "При шуме на апсах: Игрок 4 фолбэк, Игрок 5 ротируется в угол шорта",
+        "При шуме на яме/коврах: Игроки 1 и 2 в кросс-позициях, молотов в яму от Игрока 1",
+        "Если Т берут мид силой: окно отступает, кидаем смок на коннектор",
+        "Ротация — только по точному коллу от живого игрока",
+      ],
+      tips: [
+        "Пассивная защита снижает риск ранних потерь и даёт время на помощь с другой точки",
+        "Не пикайте окно если слышите 2+ Т в миду — перестреляют",
+        "Сейвьте AWP — он стоит дороже одного раунда",
+        "На Mirage защита выигрывает 54-55% раундов в среднем — не геройствуйте, играйте от стандарта",
+      ],
+    },
+    {
+      id: "m-ct-fb-2",
+      name: "Агрессивный контроль мида",
+      diff: "medium",
+      tag: "Захват центра",
+      desc: "Контроль мида — одно из ключевых правил игры за КТ. Мид открывает доступ к обоим плентам. Активная игра тремя игроками на миду диктует темп игры и заставляет Т принимать быстрые решения.",
+      utility: ["5× смоков", "4× флешки", "3× молотова"],
+      buy: "5× M4 + AWP в окне, броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — окно (AWP)", task: "Главная позиция и пушка раунда. Пикает топ мид, давит снайперской агрессией. Задача — подавить любую активность Т в миду." },
+        { role: "Игрок 2 — парапет", task: "Контроль шорта и быстрая помощь Б. Парапет — ключевая позиция: позволяет и удерживать мид, и быстро перетянуться на сайт." },
+        { role: "Игрок 3 — коннектор", task: "Давит на мид через коннектор и контролирует возможный выход на А. Удерживает на себе внимание Т." },
+        { role: "Игрок 4 — А (тикет)", task: "Соло на А. Дальний холд от тикета." },
+        { role: "Игрок 5 — Б (лавка)", task: "Соло на Б. Дальний холд лавки." },
+      ],
+      execute: [
+        "Игрок 1 сразу же занимает окно с AWP",
+        "Игрок 3 идёт в коннектор и кидает молотов или HE на топ мид",
+        "Игрок 2 встаёт на парапет, готов пикнуть шорт",
+        "Игроки 4 и 5 стоят дальние, слушают звуки",
+        "При активности на миду — Игроки 1, 2, 3 сжимают центр",
+        "При хите на сайт — соло-холдеры задерживают, мидовая тройка перетягивается",
+      ],
+      tips: [
+        "Контроль мида заставляет Т принимать быстрые решения — это часто приводит к ошибкам",
+        "Главная слабость — соло на сайтах. Если Т сразу пушат — соло-холдер проиграет, нужна быстрая ротация",
+        "Подходит против команд которые любят медленную игру через мид",
+      ],
+    },
+    {
+      id: "m-ct-fb-3",
+      name: "Стак 3 на А",
+      diff: "medium",
+      tag: "Против А-хеви команд",
+      desc: "Стак трёх игроков на А против команд которые любят бить А. Б играют 1+1 (апсы + шорт). Когда на А приходит атака — у вас 3 на сайте, и вы железно её отбиваете.",
+      utility: ["5× смоков", "4× флешки", "4× молотова"],
+      buy: "5× M4 + AWP, броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — агрессия ямы (AWP)", task: "Яма с AWP. Агрессивный пик ямы и ковров." },
+        { role: "Игрок 2 — тикет", task: "Дальний холд А. Стандартная игра от тикета." },
+        { role: "Игрок 3 — коннектор/джангл", task: "Активный холд коннектора. Может агрессивно пикнуть белые ящики на миду." },
+        { role: "Игрок 4 — Б апсы", task: "Соло на апсах. Лавка или окно. Задерживает." },
+        { role: "Игрок 5 — шорт/мид", task: "Парапет + шорт. Помогает контролю мида и Б рота." },
+      ],
+      execute: [
+        "Игрок 1 ранний пик ямы — выстрел и retreat в сайт",
+        "Игрок 3 контролит коннектор — кидает HE/молотов на топ мид",
+        "Игрок 5 пикает парапет — может поймать раш через шорт",
+        "При хите на А — у вас 3 игрока на сайте, ROUND WIN",
+        "При хите на Б — Игрок 4 задерживает, Игрок 3 быстро перетягивается через коннектор → шорт",
+        "Пуш Т через мид — Игроки 3 и 5 в кроссе у комнаты с лестницей",
+      ],
+      tips: [
+        "Используйте если уверены что Т идут на А — иначе соло на Б проиграет",
+        "Сильно против рашей с ковров — 3 человека легко удержат 5",
+      ],
+    },
+  ],
+
+  // ==========================================================
+  // ============== DUST 2 ====================================
+  // ==========================================================
+
+  // ----- Т — ПИСТОЛЕТКА -----
+  "dust2-T-pistol": [
+    {
+      id: "d-t-p-1",
+      name: "Раш Б через тоннели",
+      diff: "easy",
+      tag: "Беспроигрышный мем-раш",
+      desc: "Все 5 быстро в верхнюю темку (верхний тоннель) и выпрыгивают на плент Б. Главное — скорость и не дать защите расставиться. Хорошо работает на пистолетке когда КТ только начали разбегаться.",
+      utility: ["1× флешка (на двери)", "1× смок (опц.)"],
+      buy: "5× Glock + 1-2× флешки + броня (1-2 игрокам)",
+      players: [
+        { role: "Игрок 1 — энтри", task: "Первый бежит в верхнюю темку. Прыгает на плент через выход у машины." },
+        { role: "Игрок 2 — флешер", task: "За Игроком 1. Кидает поп-флешку через крышу темки на плент перед выходом." },
+        { role: "Игрок 3 — добив", task: "Сразу за флешкой. Чистит окно и угол у машины." },
+        { role: "Игрок 4 — поддержка", task: "Контролит танцпол и дальний угол. Стреляет КТ которые подбегают с КТ-респа." },
+        { role: "Игрок 5 — бомба", task: "Последним. Ставит бомбу за машиной или в дальнем углу." },
+      ],
+      execute: [
+        "Все 5 на ноге бегут к верхней темке через двери из Т-респа",
+        "Игрок 2 перед выходом кидает поп-флешку над крышей темки",
+        "Игрок 1 выпрыгивает на плент сразу после флешки",
+        "Игроки 3-5 заходят за ним толпой, не задерживаясь",
+        "Чистим машину, окно, танцпол",
+        "Бомба за машиной. Постплант: дальний угол, окно, машина изнутри",
+      ],
+      tips: [
+        "Не задерживайтесь в темке — там вас закидают молотовом",
+        "Главная угроза — снайпер защиты в коробке (бокс на А) который перетягивается. Если игрок в окне его услышит — даёт колл",
+        "На пистолетке броня важнее третьей флешки",
+      ],
+    },
+    {
+      id: "d-t-p-2",
+      name: "Контроль лонга",
+      diff: "easy",
+      tag: "Перестрелка с КТ-АВПером",
+      desc: "Двое идут на лонг и выигрывают дуэль с КТ-снайпером. Остальные контролят мид и шорт. Хорошо работает если у вас уверенный стрелок.",
+      utility: ["1× флешка (через лонг)", "2× смока"],
+      buy: "5× Glock + 2× смока + 1× флешка + броня",
+      players: [
+        { role: "Игрок 1 — энтри лонга", task: "Первый на двери лонга. Под флешку Игрока 2 выходит и пикает бокс." },
+        { role: "Игрок 2 — флешер лонга", task: "Кидает флешку Игроку 1 для выхода. Идёт за ним. Контролит яму и рампу." },
+        { role: "Игрок 3 — мид", task: "Кидает смок на двери (или икс-бокс), пикает мид. Слушает движение." },
+        { role: "Игрок 4 — шорт", task: "Контролит шорт. Может пикнуть катвок если есть пик." },
+        { role: "Игрок 5 — Б темка", task: "Слушает Б, на случай если КТ перетянутся. Поддерживает мид по необходимости." },
+      ],
+      execute: [
+        "Игроки 1-2 выходят за двери лонга",
+        "Игрок 2 кидает флешку через двери на бокс",
+        "Игрок 1 пикает после флешки — стреляет КТ-АВПера в боксе",
+        "Игрок 3 кидает смок на двери (закрывает мид)",
+        "Если лонг взят — Игрок 5 и Игрок 3 присоединяются на лонг, заходят на сайт",
+        "Если контакта нет — играем по таймеру до постановки",
+      ],
+      tips: [
+        "Лонг — главная зона на пистолетке, кто его выиграл — тот выиграл раунд",
+        "Пейте флешку не назад а в стенку — так она не аукнет КТ",
+        "Не лезьте на лонг без флешки — снайпер в боксе вас не пропустит",
+      ],
+    },
+  ],
+
+  // ----- Т — ФОРС -----
+  "dust2-T-force": [
+    {
+      id: "d-t-f-1",
+      name: "Стак на лонг",
+      diff: "easy",
+      tag: "Анти-эко через раш",
+      desc: "Всей пятёркой быстро в лонг. Лонг широкий, выкурить всех молотовом сложно — у вас преимущество в численности и темпе. Простая и эффективная тактика для форса.",
+      utility: ["1-2× смока", "2× флешки", "1× молотов"],
+      buy: "MAC-10 × 2-3, Tec-9 / Five-Seven, броня всем",
+      players: [
+        { role: "Игрок 1 — энтри (MAC-10)", task: "Первый из дверей лонга. Под флешку чистит бокс." },
+        { role: "Игрок 2 — добив (MAC-10)", task: "Сразу за энтри. Чистит яму и угол у машины." },
+        { role: "Игрок 3 — флешер", task: "Кидает 2 флешки через двери лонга для прохода команды." },
+        { role: "Игрок 4 — гренадёр", task: "Кидает смок на бокс и молотов в яму (если защита там сидит)." },
+        { role: "Игрок 5 — бомба", task: "Идёт последним. Ставит бомбу на дефолте А за рампой." },
+      ],
+      execute: [
+        "Все 5 быстро бегут на лонг через двери",
+        "Игрок 4 кидает смок на бокс (закрывает снайпера) и молотов в яму",
+        "Игрок 3 кидает флешку через двери",
+        "Игрок 1 выбегает первым, чистит бокс",
+        "Игрок 2 трейдит, остальные за ним",
+        "Бомба на дефолте А. Постплант: машина, рампа, угол у бокса",
+      ],
+      tips: [
+        "MAC-10 идеально подходит — лонг не самый дальний, и в ближнем бою у автоматов мало шансов против скорострельности MAC",
+        "Не забывайте про шорт — оттуда могут зайти в спину при постпланте",
+      ],
+    },
+    {
+      id: "d-t-f-2",
+      name: "Раш Б всей толпой",
+      diff: "easy",
+      tag: "Тильто-стан",
+      desc: "Классика когда команда уже психует. Всей пятёркой бежим в верхнюю темку и вылетаем на плент. На форсе с MAC-10 очень эффективно — Б тесный, СМГ там король.",
+      utility: ["2× флешки", "1× моло (опц.)"],
+      buy: "MAC-10 × 3-4, Tec-9, броня всем",
+      players: [
+        { role: "Игрок 1 — энтри", task: "Первый из верхней темки на плент." },
+        { role: "Игрок 2 — добив", task: "Сразу за энтри, добивает по контакту." },
+        { role: "Игрок 3 — флешер", task: "Поп-флешка через крышу темки на плент перед выходом команды." },
+        { role: "Игрок 4 — поддержка", task: "Идёт за командой. Чистит дальний угол и окно." },
+        { role: "Игрок 5 — бомба", task: "Последний. Ставит бомбу за машиной." },
+      ],
+      execute: [
+        "Все 5 бегут к верхней темке без шифта",
+        "Игрок 3 кидает поп-флешку над крышей темки",
+        "Игрок 1 первым выпрыгивает на плент",
+        "Команда заходит толпой не задерживаясь",
+        "Чистим машину, окно, дальний угол",
+        "Бомба за машиной. Постплант: дальний угол, нижняя темка (в спину перетяжке)",
+      ],
+      tips: [
+        "Проверьте машину обязательно — там часто сидит КТ закрыто",
+        "После планта один игрок может спуститься в нижнюю темку и поймать перетяжку с КТ-респа",
+      ],
+    },
+  ],
+
+  // ----- Т — ФУЛБАЙ -----
+  "dust2-T-fullbuy": [
+    {
+      id: "d-t-fb-1",
+      name: "Сплит А",
+      diff: "medium",
+      tag: "База ММ и FACEIT",
+      desc: "Базовая фулбай-тактика на А. Трое идут лонг, двое через шорт. Зажимаем сайт с двух сторон — у защиты А мало шансов удержать.",
+      utility: ["3-4× смока", "3× флешки", "1× молотов"],
+      buy: "5× AK + AWP опц., броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — энтри лонга", task: "С самым ближним к боксу спавном. Открывает лонг под флешку Игрока 2 на тайминге 1:49. Чистит яму и бокс." },
+        { role: "Игрок 2 — лонг саппорт", task: "Кидает флешку для Игрока 1. После зачистки лонга кидает 1-2 смока на КТ-спавн чтобы отрезать перетяжку." },
+        { role: "Игрок 3 — лонг (третий)", task: "Третий с лонга. Может остаться у бокса как уши и поджидать перетягивающихся КТ." },
+        { role: "Игрок 4 — шорт", task: "Идёт через шорт под прикрытием смока на икс-бокс. Заходит на сайт сверху одновременно с лонгом." },
+        { role: "Игрок 5 — шорт саппорт", task: "Идёт с Игроком 4. Кидает смок на икс-бокс с самого начала чтобы перекрыть КТ-снайпера в миду." },
+      ],
+      execute: [
+        "Игрок 5 сразу кидает смок на икс-бокс — закрываем мид от снайпера",
+        "Игроки 4-5 проходят на шорт под прикрытием смока",
+        "Игроки 1-3 идут на лонг через двери",
+        "На 1:49 Игрок 2 кидает флешку на бокс",
+        "Игрок 1 выходит первым, чистит бокс и яму",
+        "Игрок 2 после зачистки кидает смоки на КТ (1-2 штуки) — отрезает перетяжку",
+        "Лонг и шорт заходят на сайт одновременно — зажим с двух сторон",
+        "Бомба на дефолте А. Постплант: машина, рампа, угол у бокса, один в спину через шорт",
+      ],
+      tips: [
+        "Тайминг 1:49 для флешки критичен — слишком рано и КТ ещё не на позиции, поздно — Игрока 1 уже подстрелили",
+        "Если на пути на лонг услышали бой — Игроки 1-3 могут ускориться, а шортовая двойка может рашить шорт",
+        "Молотовы и осколочные сильно облегчают вход — не экономьте",
+      ],
+    },
+    {
+      id: "d-t-fb-2",
+      name: "Сплит Б (Mid-to-B)",
+      diff: "hard",
+      tag: "Окружение через два входа",
+      desc: "Заходим на Б с двух сторон одновременно: один игрок из верхней темки, остальные через мид → нижнюю темку → плент. Ломает крестовой огонь защиты.",
+      utility: ["3× смока", "2× флешки", "1× молотов"],
+      buy: "5× AK + броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — верхняя темка", task: "Один остаётся в верхней темке. Ждёт пока команда зайдёт через мид. Заходит на сайт одновременно с тиммейтами для добивания." },
+        { role: "Игрок 2 — мид → икс-бокс", task: "Идёт через мид к икс-боксу. Главная задача — кинуть смок на КТ-спавн с позиции у икс-бокса." },
+        { role: "Игрок 3 — мид → нижняя темка", task: "Спускается через нижнюю темку на мид. После смока на КТ кидает флешку в двери на Б." },
+        { role: "Игрок 4 — энтри сайт", task: "За Игроком 3. Первым заходит на плент через двери после флешки." },
+        { role: "Игрок 5 — добив + бомба", task: "За Игроком 4. Чистит, ставит бомбу. Может остаться в миду караулить перетяжку с дверей и КТ-респа." },
+      ],
+      execute: [
+        "Команда идёт в верхнюю темку, Игрок 1 остаётся",
+        "Игроки 2-5 спускаются через нижнюю темку на мид (или сразу через двери из спавна)",
+        "Игрок 2 встаёт у икс-бокса и кидает смок на КТ-спавн",
+        "Как только смок сработал — Игрок 3 кидает флешку через двери на Б",
+        "Игроки 4-5 расчищают мид и заходят в Б с дверей",
+        "Игрок 1 одновременно выходит из верхней темки",
+        "Защита зажата с двух сторон. Бомба за машиной. Постплант: окно, машина, дальний угол",
+      ],
+      tips: [
+        "Смок на КТ-спавн — это сердце тактики. Без него защита приедет с А за секунды",
+        "Игрок в верхней темке должен чётко слышать когда заходить — лучше пусть IGL даёт колл",
+        "Один игрок может остаться у икс-бокса слушать мид и стрелять любого кто попытается перетянуться через двери",
+      ],
+    },
+    {
+      id: "d-t-fb-3",
+      name: "Фейк Б — выход А",
+      diff: "hard",
+      tag: "Обманка от BIG",
+      desc: "Хитрая тактика — три игрока шумят на верхней темке создавая впечатление раша Б, в это время двое тихо проходят в шорт. Защита перетягивается на Б, и команда атакует А вчетвером.",
+      utility: ["4-5× смоков", "3× флешки"],
+      buy: "5× AK + броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — фейкер в темке", task: "Идёт в верхнюю темку с дополнительными гранатами от тиммейтов. Шумит максимально: смок на выход, выстрелы, флешки. Симулирует постановку бомбы." },
+        { role: "Игрок 2 — фейк-саппорт", task: "С Игроком 1 в темке. Скидывает гранаты Игроку 1, потом тихо на шифте перетягивается в шорт." },
+        { role: "Игрок 3 — фейк-саппорт 2", task: "С Игроком 1 в темке. Те же действия — отдал гранаты, на шифте через мид в шорт." },
+        { role: "Игрок 4 — тихий проход в шорт", task: "Тихо проходит из мида в шорт. В идеале его не должен заметить вражеский снайпер. После сбора команды в шорте — заход на А." },
+        { role: "Игрок 5 — тихий проход в шорт", task: "С Игроком 4. Несёт бомбу. Главное — не засветить пакет." },
+      ],
+      execute: [
+        "Все идут в верхнюю темку, Игроки 4-5 тихо отделяются и через мид идут в шорт",
+        "Игроки 2-3 в темке скидывают гранаты Игроку 1",
+        "Игрок 1 максимально шумит: смок на выход темки, перестрелка с КТ из тоннеля, флешки на сайт",
+        "Игроки 2-3 на шифте перетягиваются в шорт через мид к команде",
+        "После того как защита начала перетягиваться на Б — четверо в шорте заходят на сайт А",
+        "Бомба ставится на А. Игрок 1 в это время спускается в нижнюю темку и ловит перетягивающихся обратно КТ в дверях",
+      ],
+      tips: [
+        "Главное правило — не засветить бомбу. Если защита увидит пакет в шорте — фейк раскрыт",
+        "Игрок 1 должен очень убедительно играть в темке. Можно даже фейк-плант (прервать постановку чтобы защита услышала)",
+        "Тактика рискованная — успех зависит от того, поведётся ли защита",
+      ],
+    },
+  ],
+
+  // ----- КТ — ПИСТОЛЕТКА -----
+  "dust2-CT-pistol": [
+    {
+      id: "d-ct-p-1",
+      name: "Стандарт пистолетки",
+      diff: "easy",
+      tag: "База",
+      desc: "Стандартная расстановка: контролим лонг, мид, шорт и Б. Никаких рисков, играем от информации и точных USP.",
+      utility: ["1× смок", "2× флешки"],
+      buy: "USP × 5, броня всем",
+      players: [
+        { role: "Игрок 1 — лонг (бокс)", task: "Сидит за боксом или за бочками на лонге. Главная пушка лонга — должен поймать раннюю атаку." },
+        { role: "Игрок 2 — А сайт", task: "Сидит на А (рампа или дефолт). Поддерживает Игрока 1 на лонге, страхует шорт." },
+        { role: "Игрок 3 — мид", task: "Дальний холд мида от КТ-спавна. Может пикнуть зигу или икс-бокс." },
+        { role: "Игрок 4 — шорт (катвок)", task: "Сидит на катвоке или у двери на КТ-спавне. Контролит шорт." },
+        { role: "Игрок 5 — Б", task: "Сидит на Б — за машиной или в дальнем углу. Слушает темку." },
+      ],
+      execute: [
+        "Игрок 1 пикает выход с дверей лонга — может поймать раннюю атаку",
+        "Игрок 3 кидает смок на двери (закрывает мид)",
+        "Игроки 2 и 4 в кросс-позициях на А",
+        "При раше лонга — Игроки 1 и 2 бьют в кросс, Игрок 4 страхует со стороны шорта",
+        "При раше Б — Игрок 5 задерживает, Игрок 3 быстро через мид к Б",
+        "Информация важнее килла — давайте коллы",
+      ],
+      tips: [
+        "USP стреляет точно на дальние дистанции — пользуйтесь этим, держите дистанцию",
+        "На пистолетке броня обязательна — без неё каждая дуэль на удачу",
+        "Не пикайте лонг агрессивно если у вас всего 1 игрок — снайпер террористов снимет с пары шагов",
+      ],
+    },
+  ],
+
+  // ----- КТ — ФОРС -----
+  "dust2-CT-force": [
+    {
+      id: "d-ct-f-1",
+      name: "Агрессивная разведка",
+      diff: "medium",
+      tag: "Сбор информации",
+      desc: "Двое игроков делают ранние пуши — один в нижнюю темку через двери, второй в мид к пальме. Цель не убить, а собрать инфу куда идёт атака. Команда быстро перетягивается по информации.",
+      utility: ["2× флешки", "1× смок"],
+      buy: "MP9 × 2-3, Deagle × 1, броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — пуш в нижнюю темку", task: "Быстро через двери в нижнюю темку. Слушает: бегут ли Т на Б? Если да — даёт колл и отступает." },
+        { role: "Игрок 2 — пуш мида (пальма)", task: "Бежит по миду к пальме. Кидает флешку над дверьми чтобы не словить АВП с суисайда. Слушает: бегут ли Т на лонг/мид/шорт?" },
+        { role: "Игрок 3 — А сайт", task: "Дальний холд А. Готов помочь по информации." },
+        { role: "Игрок 4 — Б сайт", task: "Дальний холд Б. Готов помочь по информации." },
+        { role: "Игрок 5 — мид/связка", task: "Стоит в КТ-спавне. Готов перетянуться куда угодно по коллу разведчиков." },
+      ],
+      execute: [
+        "Игрок 2 кидает флешку над дверьми мида",
+        "Игроки 1 и 2 одновременно пушат по своим направлениям",
+        "Игрок 1 слушает в темке, Игрок 2 у пальмы",
+        "При первом контакте — отступление к команде по сигналу",
+        "Игрок 5 перетягивается по информации (на Б если шум в темке, на А если слышно лонг)",
+        "Альтернатива: пушеры могут пропустить атакующих и зайти в спину после планта",
+      ],
+      tips: [
+        "Главное правило — даже если не видите врага, это не значит что он вас не слышит. Двигайтесь тихо",
+        "Не лезьте далеко — задача собрать инфу, а не геройски умереть",
+        "MP9 — лучшая анти-эко пушка для КТ на близких дистанциях",
+      ],
+    },
+  ],
+
+  // ----- КТ — ФУЛБАЙ -----
+  "dust2-CT-fullbuy": [
+    {
+      id: "d-ct-fb-1",
+      name: "Стандарт 2-1-2",
+      diff: "easy",
+      tag: "База Dust 2",
+      desc: "Классическая расстановка: 2 на А, 1 в миду, 2 на Б. Самая универсальная схема. Главное — правильно распределить роли по спавнам.",
+      utility: ["5× смоков", "4× флешки", "3× молотова"],
+      buy: "5× M4 + AWP в миду или на А, броня + шлем всем",
+      players: [
+        { role: "А1 — лонг (с самым ближним спавном)", task: "Бежит на лонг. Кидает молотов или хаешку в бокс. Пропрыгивает в яму под флешки. Главная пушка лонга." },
+        { role: "А2 — сайт А", task: "Сидит на сайте (рампа или машина). Страхует игрока на лонге, готов отступать на ретейк." },
+        { role: "Мид — AWP", task: "Главная пушка раунда. Сидит в КТ-спавне или ближе к двери. Снимает любого Т который покажется в миду или шорте." },
+        { role: "Б1 — окно", task: "Сидит у окна на Б. Слушает темку, готов задержать раш." },
+        { role: "Б2 — машина/танцпол", task: "Дальний холд Б — за машиной или у дальнего угла. Поддерживает Б1." },
+      ],
+      execute: [
+        "А1 сразу бежит на лонг с молотовом — забрасывает бокс и пропрыгивает в яму",
+        "Мид-AWP занимает позицию под прицелом мида и шорта",
+        "При раше лонга: А1 в яме, А2 страхует с рампы. Если 2v3+ — А1 прячется и бьёт в спину",
+        "При раше Б: Б1 задерживает, мид-AWP перетягивается через двери в нижнюю темку",
+        "При мидовом контроле Т: AWP отступает, А2 готов помочь",
+        "Сейвьте AWP — он стоит дороже одного раунда",
+      ],
+      tips: [
+        "Молотов в бокс на лонге — обязательный рутин на каждом раунде. Без него Т зальют лонг бесплатно",
+        "Главная угроза — переключение АВПера. Если АВП погиб — сразу сейвиться, не геройствовать",
+        "Антифлеш-лайнапы для лонга обязательны — должны попадать в бокс даже ослеплённым",
+      ],
+    },
+    {
+      id: "d-ct-fb-2",
+      name: "Усиленный лонг 3-1-1",
+      diff: "medium",
+      tag: "Против лонг-хеви команд",
+      desc: "Стак трёх игроков на А с упором на лонг. Один в миду, один на Б соло. Используется когда команда соперника любит бить через лонг.",
+      utility: ["5× смоков", "4× флешки", "4× молотова"],
+      buy: "5× M4 + AWP, броня + шлем всем",
+      players: [
+        { role: "А1 — лонг (близкий спавн)", task: "Бежит на лонг с молотовом или хаешкой. Кидает в бокс и пропрыгивает в яму под флешки." },
+        { role: "А2 — лонг (второй)", task: "За А1. Контролит угол лонга, страхует первого." },
+        { role: "А3 — сайт А", task: "Сидит на сайте — за рампой, машиной или коробкой. Страхует двойку на лонге." },
+        { role: "Мид — AWP/M4", task: "Соло в миду. Слушает шорт и катвок. Готов перетянуться куда угодно." },
+        { role: "Б — соло", task: "Сидит на Б один. Задерживает раш до перетяжки. Сейвится если 1 против 3+." },
+      ],
+      execute: [
+        "А1 бежит на лонг и закидывает бокс молотовом",
+        "А2 идёт за ним, занимает угол лонга",
+        "А3 на сайте слушает шум",
+        "Если Т рашат лонг — двое в длине бьют выходящих из бокса в кросс с А3",
+        "Если Т идут шортом — А1 и А2 быстро перетягиваются на сайт через машину или рампу",
+        "Если Т идут на Б — соло задерживает, мидовик через двери на Б, остальные перетягиваются с А медленно",
+      ],
+      tips: [
+        "Используйте если уверены что атака на А — иначе соло на Б проиграет",
+        "Молотов в бокс обязателен — без него весь страт развалится",
+        "Нельзя стреляться долго с ямой стоя в сайте — снайпер террористов в питу всегда в плюсе по позиции",
+      ],
+    },
+    {
+      id: "d-ct-fb-3",
+      name: "Стак 3 на Б",
+      diff: "hard",
+      tag: "Засада-обманка",
+      desc: "Рискованная тактика — три игрока сидят на Б в кроссе и ловят раш. На лонге и А играем 1-1, мид остаётся открытым. Работает раз — потом противник запомнит.",
+      utility: ["5× смоков", "4× флешки", "3× молотова"],
+      buy: "5× M4 + AWP, броня + шлем всем",
+      players: [
+        { role: "Б1 — машина", task: "Сидит закрыто за машиной. Главная задача — перекрёстный огонь по Т выходящим из темки." },
+        { role: "Б2 — танцпол (за ящиком)", task: "Сидит за ящиком на танцполе. Стреляет в кросс с Б1." },
+        { role: "Б3 — окно", task: "Сидит в окне Б, параллельно посматривает на мид. Если Т не идут на Б — отходит ближе к спавну смотреть мид." },
+        { role: "А — соло", task: "Соло на А. Дальний холд от рампы. Задерживает раш до перетяжки." },
+        { role: "Мид/лонг — соло", task: "Соло на лонге или в миду. Главная задача — раннее предупреждение, потом сейвиться." },
+      ],
+      execute: [
+        "Все позиции занимаются сразу с начала раунда",
+        "Б1 и Б2 не пикают, ждут пока Т зайдут в сайт",
+        "Б3 слушает и смотрит мид одновременно",
+        "Если Т рашат Б — троица бьёт в перекрёстный огонь, ROUND WIN",
+        "Если Т идут на А — Б3 даёт инфу, троица перетягивается на А (но обычно поздно)",
+        "Если Т идут медленно — Б3 ближе к спавну, играем как 2-1-2",
+      ],
+      tips: [
+        "Тактика рассчитана на удачу — если защита угадала с местом раша, раунд почти выигран",
+        "Если бомба засветилась на лонге — троица должна как можно быстрее бежать на А, но это сложно успеть",
+        "Используйте раз в полигры — повторно не сработает, противник адаптируется",
+      ],
+    },
+  ],
+};
+
+
+// ============================================================
+// HTML escape + utility chip
+// ============================================================
+function esc(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function utilChip(item) {
+  const lower = item.toLowerCase();
+  let cls = 'smoke', icon = ICONS.cloud;
+  if (lower.includes('моло')) { cls = 'molly'; icon = ICONS.flame; }
+  else if (lower.includes('флеш')) { cls = 'flash'; icon = ICONS.zap; }
+  else if (lower.includes('he')) { cls = 'he'; icon = ICONS.bomb_sm; }
+  return `<span class="util-chip ${cls}">${icon}${esc(item)}</span>`;
+}
+
+function diffBadge(diff) {
+  const labels = { easy: 'ПРОСТАЯ', medium: 'СРЕДНЯЯ', hard: 'СЛОЖНАЯ' };
+  return `<span class="diff-badge diff-${diff}">${labels[diff]}</span>`;
+}
+
+// ============================================================
+// STATE + ROUTER
+// ============================================================
+const state = {
+  step: 'map',     // map → side → round → list → detail
+  map: null,
+  side: null,
+  round: null,
+  tactic: null,
+};
+
+function navigate(step) {
+  state.step = step;
+  window.scrollTo(0, 0);
+  render();
+}
+
+function goBack() {
+  const order = ['map', 'side', 'round', 'list', 'detail'];
+  const i = order.indexOf(state.step);
+  if (i > 0) navigate(order[i-1]);
+}
+
+function reset() {
+  state.step = 'map';
+  state.map = null;
+  state.side = null;
+  state.round = null;
+  state.tactic = null;
+  render();
+}
+
+// ============================================================
+// VIEWS
+// ============================================================
+function viewHeader() {
+  let sub = '';
+  if (state.step === 'map') sub = 'ВЫБОР КАРТЫ';
+  else if (state.step === 'side') sub = `${state.map.name.toUpperCase()} / СТОРОНА`;
+  else if (state.step === 'round') sub = `${state.map.name.toUpperCase()} · ${state.side} / РАУНД`;
+  else if (state.step === 'list') sub = `${state.map.name.toUpperCase()} · ${state.side} · ${state.round.name.toUpperCase()}`;
+  else if (state.step === 'detail') sub = `БРИФИНГ // ${state.tactic.name.toUpperCase()}`;
+
+  const left = state.step === 'map'
+    ? `<div class="header-icon">${ICONS.target}</div>`
+    : `<button class="header-back" onclick="goBack()" aria-label="Назад">${ICONS.back}</button>`;
+
+  const reset = state.step !== 'map'
+    ? `<button class="header-reset" onclick="reset()">СБРОС</button>`
+    : '';
+
+  return `<div class="header">
+    ${left}
+    <div class="header-title-block">
+      <div class="header-title">TACTICAL<span class="accent">/</span>OPS</div>
+      <div class="header-sub">${esc(sub)}</div>
+    </div>
+    ${reset}
+  </div>`;
+}
+
+function viewMapStep() {
+  const cards = MAPS.map(m => {
+    if (m.available) {
+      return `<button class="card" onclick="selectMap('${m.id}')">
+        <div class="card-row">
+          <div class="card-thumb">${m.id.slice(0,3).toUpperCase()}</div>
+          <div class="card-body">
+            <div class="card-title">${esc(m.name)}</div>
+            <div class="card-meta">${esc(m.code)}</div>
+          </div>
+          <div class="card-arrow">›</div>
+        </div>
+      </button>`;
+    }
+    return `<div class="card disabled">
+      <div class="card-row">
+        <div class="card-thumb">${m.id.slice(0,3).toUpperCase()}</div>
+        <div class="card-body">
+          <div class="card-title">${esc(m.name)}</div>
+          <div class="card-meta">${esc(m.code)}</div>
+        </div>
+        <div class="card-lock">${ICONS.lock} СКОРО</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `<div>
+    <div class="step-label">// STEP 01</div>
+    <h2 class="step-title">Выбери <span class="accent">карту</span></h2>
+    <div class="card-list">${cards}</div>
+    <div class="intro-note">// Сейчас доступны Mirage и Dust 2. Остальные карты — в разработке.</div>
+  </div>`;
+}
+
+function viewSideStep() {
+  return `<div>
+    <div class="step-label">// STEP 02</div>
+    <h2 class="step-title">За кого <span class="accent">играешь</span>?</h2>
+    <div class="map-container">
+      <div class="map-label">// ${esc(state.map.code)} · СХЕМА КАРТЫ</div>
+      ${getMapDiagramSVG(state.map.id)}
+    </div>
+    <div class="card-list">
+      <button class="side-btn t" onclick="selectSide('T')">
+        <div class="side-btn-row">
+          <div class="side-icon">${ICONS.bomb}</div>
+          <div style="flex:1">
+            <div class="side-name">TERRORISTS</div>
+            <div class="side-meta">Атака · плант бомбы</div>
+          </div>
+          <div class="card-arrow">›</div>
+        </div>
+      </button>
+      <button class="side-btn ct" onclick="selectSide('CT')">
+        <div class="side-btn-row">
+          <div class="side-icon">${ICONS.users}</div>
+          <div style="flex:1">
+            <div class="side-name">COUNTER-TERRORISTS</div>
+            <div class="side-meta">Защита · дефьюз</div>
+          </div>
+          <div class="card-arrow">›</div>
+        </div>
+      </button>
+    </div>
+  </div>`;
+}
+
+function viewRoundStep() {
+  const cards = ROUND_TYPES.map(r => {
+    const list = TACTICS[`${state.map.id}-${state.side}-${r.id}`] || [];
+    const count = list.length;
+    if (count === 0) {
+      return `<div class="card disabled">
+        <div class="round-card-content">
+          <div class="round-info">
+            <div class="round-name-row">
+              <span class="round-name">${esc(r.name)}</span>
+              <span class="round-sub">${esc(r.sub)}</span>
+            </div>
+            <div class="round-desc">${esc(r.desc)}</div>
+          </div>
+          <div class="round-count">
+            <div class="round-count-label">ТАКТИК</div>
+            <div class="round-count-num">0</div>
+          </div>
+        </div>
+      </div>`;
+    }
+    return `<button class="card" onclick="selectRound('${r.id}')">
+      <div class="round-card-content">
+        <div class="round-info">
+          <div class="round-name-row">
+            <span class="round-name">${esc(r.name)}</span>
+            <span class="round-sub">${esc(r.sub)}</span>
+          </div>
+          <div class="round-desc">${esc(r.desc)}</div>
+        </div>
+        <div class="round-count">
+          <div class="round-count-label">ТАКТИК</div>
+          <div class="round-count-num">${count}</div>
+        </div>
+      </div>
+    </button>`;
+  }).join('');
+
+  return `<div>
+    <div class="step-label">// STEP 03</div>
+    <h2 class="step-title">Тип <span class="accent">раунда</span></h2>
+    <div class="card-list">${cards}</div>
+  </div>`;
+}
+
+function viewListStep() {
+  const list = TACTICS[`${state.map.id}-${state.side}-${state.round.id}`] || [];
+  if (list.length === 0) {
+    return `<div>
+      <div class="step-label">// STEP 04</div>
+      <h2 class="step-title">Доступные <span class="accent">тактики</span></h2>
+      <div class="empty-state">// Тактики для этой комбинации скоро появятся</div>
+    </div>`;
+  }
+  const cards = list.map((t, i) => {
+    const tagHtml = t.tag ? `<div class="tactic-tag">// ${esc(t.tag)}</div>` : '';
+    const utility = t.utility.map(utilChip).join('');
+    return `<button class="tactic-card" onclick="selectTactic('${t.id}')">
+      <div class="tactic-card-header">
+        <div class="tactic-card-title-row">
+          <span class="tactic-num">#${String(i+1).padStart(2,'0')}</span>
+          <span class="tactic-name">${esc(t.name)}</span>
+        </div>
+        ${diffBadge(t.diff)}
+      </div>
+      ${tagHtml}
+      <div class="tactic-desc">${esc(t.desc)}</div>
+      <div class="tactic-utility">${utility}</div>
+    </button>`;
+  }).join('');
+
+  return `<div>
+    <div class="step-label">// STEP 04</div>
+    <h2 class="step-title">Доступные <span class="accent">тактики</span></h2>
+    <div class="card-list">${cards}</div>
+  </div>`;
+}
+
+function viewDetailStep() {
+  const t = state.tactic;
+  const tagHtml = t.tag ? `<div class="detail-tag">// ${esc(t.tag)}</div>` : '';
+  const buyHtml = t.buy ? `<div class="section-box buy">
+    <div class="section-label">// ЗАКУП</div>
+    <div class="buy-text">${esc(t.buy)}</div>
+  </div>` : '';
+  const utility = t.utility.map(utilChip).join('');
+  const roles = t.players.map((p, i) => `<div class="role-item">
+    <div class="role-num">${i+1}</div>
+    <div class="role-body">
+      <div class="role-name">${esc(p.role)}</div>
+      <div class="role-task">${esc(p.task)}</div>
+    </div>
+  </div>`).join('');
+  const execSteps = t.execute.map((step, i) => `<div class="exec-item">
+    <div class="exec-num">${String(i+1).padStart(2,'0')}</div>
+    <div class="exec-text">${esc(step)}</div>
+  </div>`).join('');
+  const tipsHtml = (t.tips && t.tips.length > 0) ? `<div class="section-box tips">
+    <div class="section-label tips-label">// ВАЖНЫЕ НЮАНСЫ</div>
+    <div class="tips-list">
+      ${t.tips.map(tip => `<div class="tip-item"><span class="tip-arrow">▸</span><span>${esc(tip)}</span></div>`).join('')}
+    </div>
+  </div>` : '';
+
+  return `<div>
+    <div class="detail-title-block">
+      <div class="detail-breadcrumb">// ${esc(state.map.name.toUpperCase())} · ${state.side} · ${esc(state.round.name.toUpperCase())}</div>
+      <div class="detail-title-row">
+        <h2 class="detail-title">${esc(t.name)}</h2>
+        ${diffBadge(t.diff)}
+      </div>
+      ${tagHtml}
+      <p class="detail-desc">${esc(t.desc)}</p>
+    </div>
+    <div class="map-container">
+      <div class="map-label">// КАРТА</div>
+      ${getMapDiagramSVG(state.map.id)}
+    </div>
+    ${buyHtml}
+    <div class="section-box">
+      <div class="section-label">// УТИЛКА КОМАНДЫ</div>
+      <div class="tactic-utility" style="padding-left:0;margin-top:0">${utility}</div>
+    </div>
+    <div class="section-box">
+      <div class="section-label">// РОЛИ ИГРОКОВ</div>
+      <div class="role-list">${roles}</div>
+    </div>
+    <div class="section-box">
+      <div class="section-label">// ИСПОЛНЕНИЕ ШАГ ЗА ШАГОМ</div>
+      <div class="exec-list">${execSteps}</div>
+    </div>
+    ${tipsHtml}
+    <div class="footer-note">// GLHF · GOOD LUCK HAVE FUN</div>
+  </div>`;
+}
+
+// ============================================================
+// ACTIONS
+// ============================================================
+function selectMap(id) {
+  state.map = MAPS.find(m => m.id === id);
+  navigate('side');
+}
+function selectSide(side) {
+  state.side = side;
+  navigate('round');
+}
+function selectRound(id) {
+  state.round = ROUND_TYPES.find(r => r.id === id);
+  navigate('list');
+}
+function selectTactic(id) {
+  const list = TACTICS[`${state.map.id}-${state.side}-${state.round.id}`] || [];
+  state.tactic = list.find(t => t.id === id);
+  navigate('detail');
+}
+
+// ============================================================
+// MAIN RENDER
+// ============================================================
+function render() {
+  let body = '';
+  if (state.step === 'map') body = viewMapStep();
+  else if (state.step === 'side') body = viewSideStep();
+  else if (state.step === 'round') body = viewRoundStep();
+  else if (state.step === 'list') body = viewListStep();
+  else if (state.step === 'detail') body = viewDetailStep();
+
+  document.getElementById('app').innerHTML = viewHeader() + `<div class="main">${body}</div>`;
+}
+
+render();
+</script>
+</body>
+</html>

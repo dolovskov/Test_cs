@@ -588,11 +588,11 @@ const ICONS = {
 const MAPS = [
   { id: "mirage", name: "Mirage", code: "DE_MIRAGE", available: true },
   { id: "dust2", name: "Dust 2", code: "DE_DUST2", available: true },
-  { id: "inferno", name: "Inferno", code: "DE_INFERNO", available: false },
-  { id: "ancient", name: "Ancient", code: "DE_ANCIENT", available: false },
-  { id: "anubis", name: "Anubis", code: "DE_ANUBIS", available: false },
-  { id: "nuke", name: "Nuke", code: "DE_NUKE", available: false },
-  { id: "train", name: "Train", code: "DE_TRAIN", available: false },
+  { id: "inferno", name: "Inferno", code: "DE_INFERNO", available: true },
+  { id: "ancient", name: "Ancient", code: "DE_ANCIENT", available: true },
+  { id: "anubis", name: "Anubis", code: "DE_ANUBIS", available: true },
+  { id: "nuke", name: "Nuke", code: "DE_NUKE", available: true },
+  { id: "overpass", name: "Overpass", code: "DE_OVERPASS", available: true },
 ];
 
 const ROUND_TYPES = [
@@ -601,6 +601,48 @@ const ROUND_TYPES = [
   { id: "fullbuy", name: "Фул-бай", sub: "Full buy", desc: "Полная покупка: рифлы, броня, утилка" },
 ];
 
+
+// ============================================================
+// MAP VIDEOS — general grenade tutorial links per map
+// ============================================================
+const MAP_VIDEOS = {
+  mirage: [
+    { title: "Все смоки на Мираже 2026", url: "https://youtube.com/watch?v=WziT07o5EB0" },
+    { title: "Лучшие раскидки на Мираже 2025 (смоки, молики, флешки)", url: "https://youtube.com/watch?v=zHW8vLNXmsk" },
+    { title: "Основные смоки Мираж — топовые раскидки", url: "https://youtube.com/watch?v=dx3wNd1zvDg" },
+    { title: "Все раскидки Мираж (с таймкодами)", url: "https://youtube.com/watch?v=N2LBvttwXOQ" },
+  ],
+  nuke: [
+    { title: "Раскидки на Нюк КС2 — все смоки (Санёк)", url: "https://youtube.com/watch?v=wm7UO8T0Deo" },
+    { title: "12 базовых смоков Nuke CS2", url: "https://youtube.com/watch?v=KASlUcNyNX0" },
+  ],
+  overpass: [
+    { title: "Лучшие раскидки на Оверпас 2025 — все смоки", url: "https://youtube.com/watch?v=Ee_P3Huynas" },
+    { title: "Раскидки гранат Overpass 2025", url: "https://youtube.com/watch?v=oH8paMfj_co" },
+    { title: "Раскидки, фишки и дефолты Overpass CS2", url: "https://youtube.com/watch?v=7GmnRgh3HkI" },
+  ],
+  ancient: [
+    { title: "Все смоки на Эншент КС2 (с таймкодами)", url: "https://youtube.com/watch?v=Vq2XL6ZemQk" },
+    { title: "Все инстасмоки в окно Ancient", url: "https://youtube.com/watch?v=oMcVv_eWq1Y" },
+    { title: "Самые простые смоки Ancient CS2", url: "https://youtube.com/watch?v=0XUaOp05RLg" },
+  ],
+  inferno: [
+    { title: "Все раскидки на Инферно КС2 (смоки, молики)", url: "https://youtube.com/watch?v=p0Gy1EVoBGg" },
+    { title: "Все смоки на Инферно — раскидки ч.1", url: "https://youtube.com/watch?v=D9Dntuy80l4" },
+    { title: "Основные смоки Инферно (от Astralis)", url: "https://youtube.com/watch?v=dx3wNd1zvDg" },
+  ],
+  anubis: [
+    { title: "Топ раскидок на Anubis 2026 (смоки, молики)", url: "https://youtube.com/watch?v=b4cIhu_axbM" },
+    { title: "Раскид смоков Anubis CS2", url: "https://youtube.com/watch?v=p4caOngT5lk" },
+    { title: "Раскидки НА Эншент КС 2 (Санёк)", url: "https://youtube.com/watch?v=wm7UO8T0Deo" },
+  ],
+  dust2: [
+    { title: "Метовый раскид смоков Dust 2 [2025]", url: "https://youtube.com/watch?v=iGfn8Mhdab4" },
+    { title: "Раскид смоков Dust 2 ч.2 [2025-2026]", url: "https://youtube.com/watch?v=-paYrikdzSU" },
+    { title: "Самые простые смоки на Dust 2", url: "https://youtube.com/watch?v=HsY54Zqaw28" },
+    { title: "Все гранаты и дефолты Dust 2 за КТ", url: "https://youtube.com/watch?v=x5Py3fauST0" },
+  ],
+};
 // ============================================================
 // MAP DIAGRAMS (SVG markup)
 // ============================================================
@@ -670,6 +712,239 @@ function getMapDiagramSVG(mapId) {
     </svg>`;
   }
 
+
+
+
+
+  if (mapId === "nuke") {
+    return `<svg viewBox="0 0 400 320" style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="400" height="320" fill="#0e0c0a"/>
+      <rect x="120" y="15" width="160" height="55" fill="${siteFill}" stroke="${siteStroke}" stroke-width="2"/>
+      <text x="200" y="40" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ПЛЕНТ А (верх)</text>
+      <text x="200" y="55" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(хат, рафтеры, сквик)</text>
+      <rect x="120" y="75" width="160" height="45" fill="${siteFill}" stroke="${siteStroke}" stroke-width="2" stroke-dasharray="4 2"/>
+      <text x="200" y="95" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ПЛЕНТ Б (низ)</text>
+      <text x="200" y="108" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(рампа, контрольная)</text>
+      <rect x="15" y="30" width="95" height="40" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="62" y="48" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="600" fill="#e0d4be">УЛИЦА</text>
+      <text x="62" y="60" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(outside)</text>
+      <rect x="15" y="75" width="95" height="30" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="62" y="93" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">СЕКРЕТ</text>
+      <rect x="290" y="30" width="95" height="35" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="337" y="48" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="600" fill="#e0d4be">РАМПА</text>
+      <text x="337" y="60" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(контроль)</text>
+      <rect x="290" y="70" width="95" height="25" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="337" y="86" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">ВЕНТЫ</text>
+      <rect x="120" y="125" width="75" height="25" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="157" y="141" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">ЛОББИ/ХАТ</text>
+      <rect x="205" y="125" width="75" height="25" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="242" y="141" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">ДВЕРИ</text>
+      <rect x="285" y="0" width="55" height="14" fill="${ctFill}" stroke="${ctStroke}" stroke-width="1"/>
+      <text x="312" y="11" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" font-weight="700" fill="#9ec5e8">КТ</text>
+      <rect x="135" y="270" width="130" height="40" fill="${tFill}" stroke="${tStroke}" stroke-width="2"/>
+      <text x="200" y="294" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" font-weight="700" fill="#f0a87a">Т-РЕСПАВН</text>
+      <line x1="165" y1="270" x2="62" y2="70" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="80" y="190" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">← улица</text>
+      <line x1="200" y1="270" x2="200" y2="150" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="210" y="220" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">↑ лобби</text>
+      <line x1="235" y1="270" x2="337" y2="65" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="300" y="190" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">→ рампа</text>
+      <text x="200" y="175" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#665e52">А (верх) и Б (низ) — друг над другом</text>
+      <text x="385" y="315" text-anchor="end" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#665e52">DE_NUKE</text>
+    </svg>`;
+  }
+
+  if (mapId === "overpass") {
+    return `<svg viewBox="0 0 400 320" style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="400" height="320" fill="#0e0c0a"/>
+      <rect x="15" y="20" width="115" height="65" fill="${siteFill}" stroke="${siteStroke}" stroke-width="2"/>
+      <text x="72" y="48" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ПЛЕНТ А</text>
+      <text x="72" y="63" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(туалет, банк,</text>
+      <text x="72" y="74" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">грузовик, парк)</text>
+      <rect x="280" y="20" width="105" height="65" fill="${siteFill}" stroke="${siteStroke}" stroke-width="2"/>
+      <text x="332" y="48" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ПЛЕНТ Б</text>
+      <text x="332" y="63" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(монстр, граффити,</text>
+      <text x="332" y="74" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">столб, вода)</text>
+      <rect x="15" y="90" width="65" height="28" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="47" y="108" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">А ЛОНГ</text>
+      <rect x="85" y="90" width="60" height="28" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="115" y="108" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">А ШОРТ</text>
+      <rect x="280" y="90" width="50" height="28" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="305" y="108" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">МОНСТР</text>
+      <rect x="335" y="90" width="50" height="28" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="360" y="108" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">КОННЕКТ</text>
+      <rect x="150" y="100" width="100" height="40" fill="${passFill}" stroke="${passStroke}" stroke-width="1.5"/>
+      <text x="200" y="120" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ФОНТАН</text>
+      <text x="200" y="133" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(playground)</text>
+      <rect x="160" y="0" width="80" height="14" fill="${ctFill}" stroke="${ctStroke}" stroke-width="1"/>
+      <text x="200" y="11" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" font-weight="700" fill="#9ec5e8">КТ-РЕСП</text>
+      <rect x="135" y="270" width="130" height="40" fill="${tFill}" stroke="${tStroke}" stroke-width="2"/>
+      <text x="200" y="294" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" font-weight="700" fill="#f0a87a">Т-РЕСПАВН</text>
+      <line x1="160" y1="270" x2="72" y2="90" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="90" y="200" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">← А лонг</text>
+      <line x1="240" y1="270" x2="305" y2="118" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="285" y="210" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">→ монстр</text>
+      <text x="385" y="315" text-anchor="end" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#665e52">DE_OVERPASS</text>
+    </svg>`;
+  }
+
+  if (mapId === "ancient") {
+    return `<svg viewBox="0 0 400 320" style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="400" height="320" fill="#0e0c0a"/>
+
+      <rect x="15" y="20" width="110" height="65" fill="${siteFill}" stroke="${siteStroke}" stroke-width="2"/>
+      <text x="70" y="48" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ПЛЕНТ А</text>
+      <text x="70" y="63" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(икс, тройка,</text>
+      <text x="70" y="74" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">храм, девятка)</text>
+
+      <rect x="15" y="90" width="55" height="28" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="42" y="108" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">А МЕЙН</text>
+
+      <rect x="75" y="90" width="55" height="28" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="102" y="108" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">ДОНАТ</text>
+
+      <rect x="280" y="20" width="105" height="65" fill="${siteFill}" stroke="${siteStroke}" stroke-width="2"/>
+      <text x="332" y="48" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ПЛЕНТ Б</text>
+      <text x="332" y="63" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(рампа, кейв,</text>
+      <text x="332" y="74" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">лонг, шорт)</text>
+
+      <rect x="300" y="90" width="85" height="28" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="342" y="105" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">РАМПА/РУИНЫ</text>
+
+      <rect x="150" y="90" width="100" height="50" fill="${passFill}" stroke="${passStroke}" stroke-width="1.5"/>
+      <text x="200" y="113" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">МИД</text>
+      <text x="200" y="128" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(окно, редрум)</text>
+
+      <rect x="150" y="145" width="50" height="25" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="175" y="161" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">ШТАНЫ</text>
+
+      <rect x="205" y="145" width="55" height="25" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="232" y="161" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">МЯСО</text>
+
+      <rect x="170" y="0" width="60" height="14" fill="${ctFill}" stroke="${ctStroke}" stroke-width="1"/>
+      <text x="200" y="11" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" font-weight="700" fill="#9ec5e8">КТ-РЕСП</text>
+
+      <rect x="135" y="270" width="130" height="40" fill="${tFill}" stroke="${tStroke}" stroke-width="2"/>
+      <text x="200" y="294" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" font-weight="700" fill="#f0a87a">Т-РЕСПАВН</text>
+
+      <line x1="160" y1="270" x2="55" y2="118" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="85" y="210" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">← А мейн</text>
+
+      <line x1="200" y1="270" x2="200" y2="140" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="210" y="220" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">↑ мид</text>
+
+      <line x1="240" y1="270" x2="340" y2="118" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="300" y="210" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">→ рампа</text>
+
+      <text x="385" y="315" text-anchor="end" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#665e52">DE_ANCIENT</text>
+    </svg>`;
+  }
+
+  if (mapId === "anubis") {
+    return `<svg viewBox="0 0 400 320" style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="400" height="320" fill="#0e0c0a"/>
+
+      <rect x="15" y="20" width="110" height="65" fill="${siteFill}" stroke="${siteStroke}" stroke-width="2"/>
+      <text x="70" y="48" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ПЛЕНТ А</text>
+      <text x="70" y="63" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(фонтан, девятка,</text>
+      <text x="70" y="74" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">хэвен, стэйрс)</text>
+
+      <rect x="15" y="90" width="70" height="28" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="50" y="108" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">А МЕЙН</text>
+
+      <rect x="90" y="90" width="55" height="28" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="117" y="108" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">АЛЛЕЯ</text>
+
+      <rect x="280" y="20" width="105" height="65" fill="${siteFill}" stroke="${siteStroke}" stroke-width="2"/>
+      <text x="332" y="48" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ПЛЕНТ Б</text>
+      <text x="332" y="63" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(подиум, нычка,</text>
+      <text x="332" y="74" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">бэксайт)</text>
+
+      <rect x="310" y="90" width="75" height="28" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="347" y="108" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">Б МЕЙН</text>
+
+      <rect x="150" y="100" width="100" height="45" fill="${passFill}" stroke="${passStroke}" stroke-width="1.5"/>
+      <text x="200" y="120" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">МИД</text>
+      <text x="200" y="135" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(мост, камера)</text>
+
+      <rect x="130" y="150" width="60" height="25" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="160" y="166" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">ВОДА</text>
+
+      <rect x="210" y="150" width="70" height="25" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="245" y="166" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">КОННЕКТОР</text>
+
+      <rect x="160" y="0" width="80" height="14" fill="${ctFill}" stroke="${ctStroke}" stroke-width="1"/>
+      <text x="200" y="11" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" font-weight="700" fill="#9ec5e8">КТ-РЕСПАВН</text>
+
+      <rect x="135" y="270" width="130" height="40" fill="${tFill}" stroke="${tStroke}" stroke-width="2"/>
+      <text x="200" y="294" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" font-weight="700" fill="#f0a87a">Т-РЕСПАВН</text>
+
+      <line x1="160" y1="270" x2="60" y2="118" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="90" y="210" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">← А мейн</text>
+
+      <line x1="200" y1="270" x2="200" y2="145" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="210" y="220" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">↑ мид</text>
+
+      <line x1="240" y1="270" x2="340" y2="118" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="300" y="210" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">→ Б мейн</text>
+
+      <text x="385" y="315" text-anchor="end" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#665e52">DE_ANUBIS</text>
+    </svg>`;
+  }
+
+  if (mapId === "inferno") {
+    return `<svg viewBox="0 0 400 320" style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="400" height="320" fill="#0e0c0a"/>
+
+      <rect x="15" y="20" width="115" height="70" fill="${siteFill}" stroke="${siteStroke}" stroke-width="2"/>
+      <text x="72" y="48" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ПЛЕНТ А</text>
+      <text x="72" y="63" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(яма, балкон,</text>
+      <text x="72" y="74" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">пески, навес)</text>
+
+      <rect x="15" y="95" width="60" height="28" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="45" y="113" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">АПСЫ</text>
+
+      <rect x="80" y="95" width="55" height="28" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="107" y="113" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">БОЙЛЕР</text>
+
+      <rect x="140" y="55" width="80" height="40" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="180" y="73" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="600" fill="#e0d4be">АРКА/ЛОНГ</text>
+      <text x="180" y="85" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(библиотека)</text>
+
+      <rect x="140" y="100" width="80" height="35" fill="${passFill}" stroke="${passStroke}" stroke-width="1.5"/>
+      <text x="180" y="118" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">МИД</text>
+      <text x="180" y="130" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(мексика)</text>
+
+      <rect x="140" y="140" width="80" height="30" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="180" y="158" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="600" fill="#e0d4be">СЕКОНД МИД</text>
+
+      <rect x="260" y="40" width="35" height="110" fill="${passFill}" stroke="${passStroke}" stroke-width="1"/>
+      <text x="277" y="97" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" font-weight="600" fill="#e0d4be" transform="rotate(-90 277 97)">БАНАН</text>
+
+      <rect x="300" y="20" width="85" height="75" fill="${siteFill}" stroke="${siteStroke}" stroke-width="2"/>
+      <text x="342" y="48" text-anchor="middle" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#f5e9d3">ПЛЕНТ Б</text>
+      <text x="342" y="63" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">(гробы, тройка,</text>
+      <text x="342" y="74" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#bfb5a0">кафель, машина)</text>
+
+      <rect x="175" y="0" width="80" height="14" fill="${ctFill}" stroke="${ctStroke}" stroke-width="1"/>
+      <text x="215" y="11" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" font-weight="700" fill="#9ec5e8">КТ-РЕСПАВН</text>
+
+      <rect x="135" y="270" width="130" height="40" fill="${tFill}" stroke="${tStroke}" stroke-width="2"/>
+      <text x="200" y="294" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" font-weight="700" fill="#f0a87a">Т-РЕСПАВН</text>
+
+      <line x1="160" y1="270" x2="80" y2="123" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="100" y="210" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">← апсы</text>
+
+      <line x1="200" y1="270" x2="180" y2="170" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="195" y="230" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">↑ мид</text>
+
+      <line x1="240" y1="270" x2="277" y2="150" stroke="${tStroke}" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <text x="265" y="220" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="${tStroke}">→ банан</text>
+
+      <text x="385" y="315" text-anchor="end" font-family="ui-monospace,monospace" font-size="9" font-weight="600" fill="#665e52">DE_INFERNO</text>
+    </svg>`;
+  }
+
   if (mapId === "dust2") {
     return `<svg viewBox="0 0 400 320" style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg">
       <rect x="0" y="0" width="400" height="320" fill="#0e0c0a"/>
@@ -729,7 +1004,6 @@ const TACTICS = {
       name: "Раш андером",
       diff: "easy",
       tag: "Самая популярная пистолетка",
-      video: "https://youtube.com/watch?v=zHW8vLNXmsk",
       desc: "Быстрый выход на А: двое идут на мид и спускаются в андер (подвал под мидом), трое заходят с ковров (паласа) сверху. Простая и проверенная пистолетная тактика.",
       utility: ["2× смока", "1× флешка"],
       buy: "5× Glock + 2× смока + 1× флешка + броня (1-2 игрокам)",
@@ -890,7 +1164,6 @@ const TACTICS = {
       name: "Раскид А с ямы",
       diff: "medium",
       tag: "Дефолт ММ и FACEIT",
-      video: "https://youtube.com/watch?v=dx3wNd1zvDg",
       desc: "Самая популярная фулбай-тактика в матчмейкинге и на Faceit. Минимум фантазии, максимум результата. Бомбардируем плент дымами, потом заходим всей командой через яму.",
       utility: ["4× смока", "3-4× флешки", "1× молотов"],
       buy: "5× AK + броня + шлем всем",
@@ -1233,6 +1506,1012 @@ const TACTICS = {
     },
   ],
 
+
+
+
+
+  // ==========================================================
+  // ============== NUKE ======================================
+  // ==========================================================
+
+  "nuke-T-pistol": [
+    { id: "n-t-p-1", name: "Быстрый выход на А через лобби", diff: "easy", tag: "Пистолетная база",
+      desc: "Быстрый заход на А через лобби/хат. На Nuke А плент наверху — КТ спаунятся прямо рядом, поэтому скорость критична. Одна флешка и смок на сквик.",
+      utility: ["1× смок (сквик)", "1× флешка"], buy: "5× Glock + смок + флешка + броня (2-3)",
+      players: [
+        { role: "Игрок 1 — энтри (хат)", task: "Первый через хат на А плент. Чистит рафтеры и сквик." },
+        { role: "Игрок 2 — смокер", task: "Кидает смок на сквик, блокирует пик КТ." },
+        { role: "Игрок 3 — флешер", task: "Флешка в хат перед выходом на плент." },
+        { role: "Игрок 4 — добив", task: "За Игроком 1. Чистит углы." },
+        { role: "Игрок 5 — рампа/бомба", task: "Контролит рампу. Если А взят — приходит с бомбой." },
+      ],
+      execute: [
+        "Игроки 1-4 быстро через лобби в хат", "Игрок 2 кидает смок на сквик", "Игрок 3 кидает флешку в хат",
+        "Игрок 1 выходит на А плент первым", "Игрок 5 контролит рампу от пуша КТ",
+        "Бомба на дефолт А. Постплант: хат, рафтеры, венты",
+      ],
+      tips: ["На Nuke КТ — сильнейшая сторона. Скорость выхода решает", "Венты — быстрый путь ротации между А и Б, слушайте звуки"],
+    },
+  ],
+  "nuke-T-force": [
+    { id: "n-t-f-1", name: "Раш Б через рампу", diff: "medium", tag: "Раш на нижний плент",
+      desc: "Всей толпой через рампу на нижний плент Б. На Nuke Б — закрытый бункер, MAC-10 и пистоли в нём работают отлично.",
+      utility: ["2× смока", "2× флешки"], buy: "MAC-10 × 2-3, Tec-9, броня всем",
+      players: [
+        { role: "Игрок 1 — энтри (MAC-10)", task: "Первый через рампу → контрольная → Б плент." },
+        { role: "Игрок 2 — смокер", task: "Смок на дверь (блокирует кросс КТ)." },
+        { role: "Игрок 3 — флешер", task: "Две флешки перед выходом на плент." },
+        { role: "Игрок 4 — добив", task: "За энтри, чистит углы бункера." },
+        { role: "Игрок 5 — бомба", task: "Последний, ставит бомбу." },
+      ],
+      execute: [
+        "Все 5 через рампу вниз", "Игрок 2 кидает смок на дверь/контрольную", "Игрок 3 — флешки",
+        "Игрок 1 заходит первым на Б", "Чистим бункер. Бомба в дефолт",
+      ],
+      tips: ["Рампа — единственный длинный путь. Если КТ слышат шаги — будьте готовы к утилке", "MAC-10 в бункере — топ, углы очень близкие"],
+    },
+  ],
+  "nuke-T-fullbuy": [
+    { id: "n-t-fb-1", name: "Контроль улицы → А", diff: "medium", tag: "Стандартный выход А",
+      desc: "Берём контроль улицы (outside) смоками, потом заходим на А через хат. Стена смоков на улице — ключ к тактике.",
+      utility: ["4× смока", "3× флешки", "1-2× молотова"], buy: "5× AK + AWP опц., броня + шлем",
+      players: [
+        { role: "Игрок 1 — улица (смоки)", task: "Кидает стену смоков на улице (между красным и синим ящиками). Блокирует видимость КТ." },
+        { role: "Игрок 2 — хат (энтри)", task: "Через лобби → хат → А плент. Молотов на сквик." },
+        { role: "Игрок 3 — хат (добив)", task: "За Игроком 2. Флешка в плент перед выходом." },
+        { role: "Игрок 4 — двери (саппорт)", task: "Через двери на А. Синхронно с хатом." },
+        { role: "Игрок 5 — секрет/лурк", task: "Через улицу → секрет → Б. Лурк или фейк на Б." },
+      ],
+      execute: [
+        "Игрок 1 кидает стену смоков на улице", "Игроки 2-3 через лобби в хат",
+        "Игрок 4 через двери (синхронно)", "Игрок 2 кидает молотов на сквик",
+        "Игрок 3 кидает флешку в плент", "Игроки 2-4 заходят на А одновременно",
+        "Игрок 5 через секрет на Б или лурк", "Бомба на А. Постплант: хат, рафтеры, двери",
+      ],
+      tips: ["Стена смоков на улице — обязательна, иначе AWP КТ всех перестреляет",
+             "На Nuke перетяжки через венты мгновенные — слушайте звуки вентиляции",
+             "Фейк на Б через рампу эффективен — КТ на Nuke часто перетягиваются быстро"],
+    },
+    { id: "n-t-fb-2", name: "Фейк А → выход Б", diff: "hard", tag: "Обманка",
+      desc: "Шумим на А (флешки, молотовы, стрелки через хат), потом через рампу заходим на Б. КТ перетягиваются на А — Б остаётся пустым.",
+      utility: ["3× смока", "3× флешки", "2× молотова"], buy: "5× AK + броня + шлем",
+      players: [
+        { role: "Игрок 1 — фейкер А", task: "Шумит на А через хат: флешки, молотовы, стреляет. Максимально убедительно." },
+        { role: "Игрок 2 — рампа (энтри)", task: "Тихо через рампу → контрольная → Б." },
+        { role: "Игрок 3 — рампа (смоки)", task: "Кидает смоки на двери и контрольную." },
+        { role: "Игрок 4 — рампа (добив)", task: "За Игроком 2 на Б." },
+        { role: "Игрок 5 — рампа (бомба)", task: "С бомбой. После зачистки Б — плант." },
+      ],
+      execute: [
+        "Игрок 1 бежит к лобби/хату и начинает шуметь — флешки, молотовы, стреляет",
+        "Игроки 2-5 тихо идут через рампу вниз", "Игрок 3 кидает смоки на двери/контрольную",
+        "Когда КТ начинают перетягиваться на А — Игроки 2-4 заходят на Б",
+        "Бомба на Б. Игрок 1 остаётся наверху и ловит перетягивающихся КТ через венты",
+      ],
+      tips: ["На Nuke фейки работают отлично — перетяжки через венты мгновенные и КТ этим пользуются",
+             "Игрок 1 должен быть очень убедительным — иначе КТ не поведутся",
+             "Через венты слышно всё — используйте это для инфы"],
+    },
+  ],
+  "nuke-CT-pistol": [
+    { id: "n-ct-p-1", name: "Стандарт пистолетки", diff: "easy", tag: "База",
+      desc: "На Nuke КТ респятся рядом с А — это главное преимущество. 3 на А, 1 рампа, 1 улица.",
+      utility: ["1× смок", "1× моло"], buy: "USP × 5, броня всем",
+      players: [
+        { role: "Игрок 1 — А (рафтеры)", task: "Рафтеры или сквик. Главный холдер А." },
+        { role: "Игрок 2 — А (хат)", task: "Контролит хат. Может агрессивно пикнуть." },
+        { role: "Игрок 3 — двери", task: "Контроль дверей и поддержка А." },
+        { role: "Игрок 4 — рампа", task: "Контроль рампы. Молотов на рампу при давлении." },
+        { role: "Игрок 5 — улица", task: "Дальний холд улицы. Слушает секрет." },
+      ],
+      execute: ["Игроки 1-3 сразу на А (близкий респ)", "Игрок 4 на рампу с молотовом",
+        "Игрок 5 контролит улицу", "При раше А — тройка бьёт в кроссе",
+        "При раше Б через рампу — Игрок 4 задерживает, Игрок 3 через венты на помощь"],
+      tips: ["На Nuke КТ — сильнейшая сторона, особенно на пистолетке", "Венты — мгновенная ротация между А и Б"],
+    },
+  ],
+  "nuke-CT-force": [
+    { id: "n-ct-f-1", name: "Агрессивный пуш улицы", diff: "medium", tag: "Захват outside",
+      desc: "Двое агрессивно занимают улицу — ловят Т которые пытаются взять контроль outside. Если угадали — забираем 2-3 кадра.",
+      utility: ["1× смок", "2× флешки"], buy: "MP9 × 2-3, Deagle, броня + шлем",
+      players: [
+        { role: "Игрок 1 — улица (пуш)", task: "Агрессивно пушит улицу под флешки." },
+        { role: "Игрок 2 — улица (саппорт)", task: "Флешки для Игрока 1. Контроль секрета." },
+        { role: "Игрок 3 — А (сквик)", task: "Стандартный холд А." },
+        { role: "Игрок 4 — рампа", task: "Контроль рампы." },
+        { role: "Игрок 5 — А (двери)", task: "Контроль дверей." },
+      ],
+      execute: ["Игроки 1-2 быстро пушат улицу", "Игрок 2 кидает флешку", "При контакте — стреляют и отступают",
+        "Информация куда идут Т → команда перетягивается"],
+      tips: ["Улица на Nuke — главная зона раннего контроля", "Не стойте на улице долго — Т закидают молотовами"],
+    },
+  ],
+  "nuke-CT-fullbuy": [
+    { id: "n-ct-fb-1", name: "Стандарт 3-1-1", diff: "easy", tag: "База Nuke",
+      desc: "Классика Nuke: 3 на А (хат/рафтеры/двери), 1 рампа, 1 улица. КТ респятся прямо у А — используйте это.",
+      utility: ["5× смоков", "4× флешки", "3× молотова"], buy: "5× M4 + AWP, броня + шлем",
+      players: [
+        { role: "А1 — рафтеры/сквик", task: "Главный холдер А. Контролит хат и сквик." },
+        { role: "А2 — двери", task: "Контроль дверей. Поддержка А." },
+        { role: "А3 — хат (агрессия)", task: "Может агрессивно пикнуть хат. Молотов на лобби." },
+        { role: "Рампа", task: "Контроль рампы и контрольной. Молотов на рампу при давлении." },
+        { role: "Улица (AWP)", task: "AWP на улице. Контролит outside и секрет." },
+      ],
+      execute: ["А1-А3 сразу занимают А (близкий респ)", "А3 кидает молотов в лобби для делея",
+        "Рампа контролит нижний уровень", "AWP на улице контролит outside",
+        "При раше А: тройка в кроссе", "При раше Б: Рампа задерживает, А3 через венты"],
+      tips: ["На Nuke КТ выигрывают ~58% раундов — самая КТ-сторонняя карта",
+             "Венты — ваш козырь. Через них ротация между А и Б занимает секунды",
+             "AWP на улице — ключевая пушка. Если он погиб — раунд сильно осложняется"],
+    },
+  ],
+
+  // ==========================================================
+  // ============== OVERPASS ==================================
+  // ==========================================================
+
+  "overpass-T-pistol": [
+    { id: "o-t-p-1", name: "Быстрый выход на Б через монстр", diff: "easy", tag: "Пистолетная база",
+      desc: "На Overpass КТ спаунятся прямо на А — поэтому на пистолетке часто бьют Б. Через монстр (тоннель) быстро на Б плент.",
+      utility: ["1× флешка", "1× смок (опц.)"], buy: "5× Glock + флешка + броня (2-3)",
+      players: [
+        { role: "Игрок 1 — энтри (монстр)", task: "Первый через монстр (тоннель) на Б плент." },
+        { role: "Игрок 2 — флешер", task: "Кидает флешку перед выходом из монстра." },
+        { role: "Игрок 3 — добив", task: "За Игроком 1, чистит граффити и столб." },
+        { role: "Игрок 4 — вода", task: "Через воду на Б с фланга." },
+        { role: "Игрок 5 — бомба", task: "Последний, ставит бомбу." },
+      ],
+      execute: ["Игроки 1-3 быстро через монстр", "Игрок 2 кидает флешку перед выходом",
+        "Игрок 1 заходит на Б, чистит граффити", "Игрок 4 через воду с фланга",
+        "Бомба на Б. Постплант: монстр, граффити, вода"],
+      tips: ["Монстр — основной путь Т на Б. КТ это знают, ждите утилку", "Вода — хороший фланговый маршрут, часто не проверяют"],
+    },
+  ],
+  "overpass-T-force": [
+    { id: "o-t-f-1", name: "Раш А через лонг", diff: "easy", tag: "Форс раш",
+      desc: "Всей толпой через А лонг. На Overpass КТ респятся на А — но если зайти быстро с утилкой, можно застать врасплох.",
+      utility: ["2× смока", "2× флешки"], buy: "MAC-10 × 2-3, Tec-9, броня всем",
+      players: [
+        { role: "Игрок 1 — энтри (MAC-10)", task: "Первый через А лонг на плент." },
+        { role: "Игрок 2 — смокер", task: "Смок на банк/туалет — блокирует позиции КТ." },
+        { role: "Игрок 3 — флешер", task: "Две флешки на плент перед выходом." },
+        { role: "Игрок 4 — добив", task: "За энтри, чистит парк и грузовик." },
+        { role: "Игрок 5 — бомба", task: "Последний, ставит бомбу." },
+      ],
+      execute: ["Все 5 через А лонг", "Игрок 2 кидает смоки на банк/туалет",
+        "Игрок 3 — флешки", "Игрок 1 заходит первым", "Бомба на дефолт А"],
+      tips: ["КТ респятся рядом с А — ожидайте быстрый кроссфайр", "MAC-10 на Overpass А — нормально, углы средние"],
+    },
+  ],
+  "overpass-T-fullbuy": [
+    { id: "o-t-fb-1", name: "Сплит Б (монстр + коннектор)", diff: "medium", tag: "Стандартный Б",
+      desc: "Сплит на Б: часть через монстр, часть через коннектор. Раскид гранатами и синхронный заход с двух сторон.",
+      utility: ["3-4× смока", "3× флешки", "1-2× молотова"], buy: "5× AK + броня + шлем",
+      players: [
+        { role: "Игрок 1 — монстр (энтри)", task: "Через монстр первым на Б." },
+        { role: "Игрок 2 — монстр (саппорт)", task: "За Игроком 1. Молотов на столб/граффити." },
+        { role: "Игрок 3 — коннектор", task: "Через фонтан → коннектор → Б с другой стороны." },
+        { role: "Игрок 4 — смоки", task: "Кидает смоки на хэвен и КТ. Блокирует перетяжку." },
+        { role: "Игрок 5 — бомба/лурк", task: "Может лурк на А или нести бомбу." },
+      ],
+      execute: ["Игроки 1-2 идут через монстр", "Игроки 3-4 через фонтан в коннектор",
+        "Игрок 4 кидает смоки на хэвен и КТ", "Игрок 2 молотов на столб",
+        "Монстр и коннектор заходят одновременно — зажим", "Бомба на Б. Постплант: монстр, коннектор, вода"],
+      tips: ["Смок на хэвен обязателен — оттуда AWP контролит весь Б", "Синхронность критична"],
+    },
+    { id: "o-t-fb-2", name: "Контроль фонтана → А", diff: "hard", tag: "Медленная игра",
+      desc: "Занимаем фонтан (playground), контролим середину карты, потом через А шорт и А лонг заходим на А. Медленная тактика для опытных команд.",
+      utility: ["4× смока", "3× флешки", "2× молотова"], buy: "5× AK + AWP, броня + шлем",
+      players: [
+        { role: "Игрок 1 — фонтан (контроль)", task: "Занимает фонтан. Контролит все направления." },
+        { role: "Игрок 2 — А лонг", task: "Через А лонг на плент. Смоки на туалет и банк." },
+        { role: "Игрок 3 — А шорт", task: "Через А шорт. Молотов на грузовик." },
+        { role: "Игрок 4 — саппорт", task: "Флешки на плент А. Поддержка с фонтана." },
+        { role: "Игрок 5 — Б фейк/лурк", task: "Шумит у монстра (фейк Б). Потом лурк." },
+      ],
+      execute: ["Игрок 5 шумит у монстра — фейк Б", "Игрок 1 занимает фонтан",
+        "Игроки 2-3 идут на А лонг и А шорт параллельно", "Игрок 2 кидает смоки на туалет/банк",
+        "Игрок 3 молотов на грузовик, Игрок 4 — флешки", "Заход с двух сторон на А",
+        "Бомба на А. Постплант: парк, грузовик, А лонг"],
+      tips: ["Overpass — КТ-сторонняя карта, медленная игра часто лучше раша",
+             "Фонтан — ключ к карте, кто его контролит — тот решает куда идти"],
+    },
+  ],
+  "overpass-CT-pistol": [
+    { id: "o-ct-p-1", name: "Стандарт пистолетки", diff: "easy", tag: "База",
+      desc: "КТ респятся прямо на А — это главное преимущество на Overpass. 3 на А, 2 на Б.",
+      utility: ["1× смок", "1× моло"], buy: "USP × 5, броня всем",
+      players: [
+        { role: "Игрок 1 — А (туалет)", task: "Контроль А лонга из туалета." },
+        { role: "Игрок 2 — А (банк)", task: "Банк. Дальний холд А." },
+        { role: "Игрок 3 — А (парк)", task: "Контроль А шорта из парка." },
+        { role: "Игрок 4 — Б (граффити)", task: "Главный холдер Б. Контролит монстр." },
+        { role: "Игрок 5 — Б (вода/столб)", task: "Дальний холд Б." },
+      ],
+      execute: ["Игроки 1-3 сразу на А", "Игроки 4-5 на Б",
+        "При раше А лонг — тройка бьёт в кроссе", "При раше через монстр — Игроки 4-5 задерживают"],
+      tips: ["КТ на Overpass выигрывают ~55% раундов", "USP точнее Glock — держите дистанцию"],
+    },
+  ],
+  "overpass-CT-force": [
+    { id: "o-ct-f-1", name: "Агрессивный пуш коннектора", diff: "medium", tag: "Поджим Б",
+      desc: "Двое агрессивно занимают коннектор и ловят Т идущих на Б. Эффект неожиданности.",
+      utility: ["1× смок", "2× флешки"], buy: "MP9 × 2-3, Deagle, броня + шлем",
+      players: [
+        { role: "Игрок 1 — коннектор (пуш)", task: "Агрессивно через коннектор. Ловит Т у монстра." },
+        { role: "Игрок 2 — коннектор (саппорт)", task: "Флешки для Игрока 1." },
+        { role: "Игрок 3 — А (банк)", task: "Стандартный холд А." },
+        { role: "Игрок 4 — А (парк)", task: "Стандартный холд А." },
+        { role: "Игрок 5 — Б (граффити)", task: "Стандартный холд Б изнутри." },
+      ],
+      execute: ["Игроки 1-2 быстро через коннектор", "Игрок 2 кидает флешку",
+        "При контакте — стреляют и отступают на Б", "Информация → команда перетягивается"],
+      tips: ["Не лезьте далеко — задача собрать инфу", "MP9 в коннекторе — отлично, углы близкие"],
+    },
+  ],
+  "overpass-CT-fullbuy": [
+    { id: "o-ct-fb-1", name: "Стандарт 3-2", diff: "easy", tag: "База Overpass",
+      desc: "Классика: 3 на А (туалет/банк/парк), 2 на Б (граффити/столб). КТ респятся на А — максимальный контроль.",
+      utility: ["5× смоков", "4× флешки", "3× молотова"], buy: "5× M4 + AWP, броня + шлем",
+      players: [
+        { role: "А1 — туалет", task: "Контроль А лонга. Молотов на лонг при давлении." },
+        { role: "А2 — банк (AWP)", task: "AWP из банка. Контролит А лонг и шорт." },
+        { role: "А3 — парк/грузовик", task: "Контроль А шорта и фонтана." },
+        { role: "Б1 — граффити", task: "Главный холдер Б. Контролит монстр." },
+        { role: "Б2 — столб/вода", task: "Дальний холд Б. Может пикнуть воду." },
+      ],
+      execute: ["А1-А3 сразу на А", "Б1-Б2 на Б",
+        "При раше А лонг: тройка в кроссе", "При раше монстр: Б1 задерживает, А3 через коннектор на помощь",
+        "Ротация только по подтверждённой инфе"],
+      tips: ["AWP из банка — имба позиция, контролит оба подхода к А",
+             "На Overpass фейки частые — не перетягивайтесь по одному контакту",
+             "Коннектор — быстрый путь ротации А↔Б, используйте его"],
+    },
+  ],
+
+  // ==========================================================
+  // ============== ANCIENT ===================================
+  // ==========================================================
+
+  "ancient-T-pistol": [
+    {
+      id: "an-t-p-1",
+      name: "Быстрый выход на А через мид",
+      diff: "easy",
+      tag: "Пистолетная классика",
+      desc: "Быстрый контроль мида и заход на А. На Ancient мид — ключ к обоим плентам. Одна флешка и смок на окно — и вы на сайте раньше чем КТ перетянутся.",
+      utility: ["1× смок (окно)", "1× флешка"],
+      buy: "5× Glock + 1× смок + 1× флешка + броня (2-3 игрокам)",
+      players: [
+        { role: "Игрок 1 — мид контроль", task: "Кидает смок на окно с респа (инста-смок). Занимает мид." },
+        { role: "Игрок 2 — энтри А", task: "Через мид → донат → А мейн. Первым на плент А." },
+        { role: "Игрок 3 — саппорт", task: "Кидает флешку через стену на А плент. Идёт за Игроком 2." },
+        { role: "Игрок 4 — добив", task: "За тройкой. Чистит храм и девятку." },
+        { role: "Игрок 5 — мид контроль / бомба", task: "Контролит мид от пуша КТ. Потом приходит с бомбой." },
+      ],
+      execute: [
+        "Игрок 1 кидает инста-смок на окно с респа",
+        "Игроки 1-4 быстро идут через мид к А",
+        "Игрок 5 контролит мид сзади",
+        "Игрок 3 кидает флешку на А плент",
+        "Игрок 2 первым заходит на сайт, чистит икс и тройку",
+        "Бомба на дефолт. Постплант: тройка, храм, донат",
+      ],
+      tips: [
+        "Инста-смок на окно — обязательно. Без него КТ-снайпер всех перестреляет",
+        "На Ancient КТ — сильная сторона, поэтому быстрота критична",
+        "Не задерживайтесь в миду — заходите сразу, пока КТ не заняли позиции",
+      ],
+    },
+  ],
+
+  "ancient-T-force": [
+    {
+      id: "an-t-f-1",
+      name: "Раш Б через рампу",
+      diff: "easy",
+      tag: "Быстрый раш",
+      desc: "Б плент атаковать проще чем А — через рампу и руины. Всей толпой на рампу, смок на шорт, и заходим.",
+      utility: ["1-2× смока", "2× флешки"],
+      buy: "MAC-10 × 2-3, Tec-9, броня всем",
+      players: [
+        { role: "Игрок 1 — энтри (MAC-10)", task: "Первый через рампу на плент Б." },
+        { role: "Игрок 2 — смокер", task: "Кидает смок на шорт и/или лонг — отрезает позиции КТ." },
+        { role: "Игрок 3 — флешер", task: "Две флешки через стену руин на плент." },
+        { role: "Игрок 4 — добив", task: "За Игроком 1, чистит кейв (пещеру) и дальние углы." },
+        { role: "Игрок 5 — бомба", task: "Последний. Ставит бомбу после зачистки." },
+      ],
+      execute: [
+        "Все 5 бегут к рампе через мясо/руины",
+        "Игрок 2 кидает смок на шорт (блокирует обзор КТ)",
+        "Игрок 3 кидает флешки через стену руин",
+        "Игрок 1 заходит первым после флешки",
+        "Остальные за ним, чистим кейв и дальние углы",
+        "Бомба на дефолт Б. Постплант: рампа, кейв, шорт",
+      ],
+      tips: [
+        "Б на Ancient атаковать проще чем А — используйте это",
+        "MAC-10 на рампе и в кейве — отлично, углы близкие",
+        "Слушайте кейв — КТ часто пушат оттуда в спину",
+      ],
+    },
+  ],
+
+  "ancient-T-fullbuy": [
+    {
+      id: "an-t-fb-1",
+      name: "Сплит Б (руины + мид)",
+      diff: "medium",
+      tag: "Базовая стратегия Б",
+      desc: "Сплит на Б: часть команды через рампу/руины, часть через мид → мясо. Раскидываем гранаты с руин (смоки на лонг, шорт, кейв). Классика от про-команд.",
+      utility: ["3-4× смока", "3× флешки", "1-2× молотова"],
+      buy: "5× AK + AWP опц., броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — руины (смокер)", task: "С позиции угла на руинах кидает смоки: на лонг и на шорт. Отрезает дальние позиции КТ." },
+        { role: "Игрок 2 — рампа (энтри)", task: "Через рампу первым на плент Б. Молотов в кейв." },
+        { role: "Игрок 3 — рампа (добив)", task: "За Игроком 2 через рампу. Чистит углы." },
+        { role: "Игрок 4 — мид → мясо", task: "Через мид заходит в мясо и выходит на Б с другой стороны. Синхронно с рампой." },
+        { role: "Игрок 5 — мид контроль / бомба", task: "Кидает смок на окно. Контролит мид. Потом приходит с бомбой." },
+      ],
+      execute: [
+        "Игрок 5 кидает инста-смок на окно с респа",
+        "Игрок 1 занимает позицию на руинах, кидает смоки на лонг и шорт",
+        "Игроки 2-3 идут на рампу, Игрок 4 через мид в мясо",
+        "Игрок 1 кидает молотов/флешку на плент",
+        "Игроки 2-3 заходят через рампу, Игрок 4 через мясо — одновременно",
+        "КТ зажаты с двух сторон. Бомба на дефолт Б",
+        "Постплант: рампа, кейв, мясо",
+      ],
+      tips: [
+        "Смок на лонг и шорт — обязательны, иначе КТ расстреляют с дальних позиций",
+        "Молотов в кейв выкуривает агрессивного опорника — без этого он может выйти в спину",
+        "Синхронность рампы и мяса критична — если рампа зайдёт раньше, КТ сфокусируются",
+      ],
+    },
+    {
+      id: "an-t-fb-2",
+      name: "Контроль мида → сплит А",
+      diff: "hard",
+      tag: "Атака А через центр",
+      desc: "Берём контроль мида смоком на окно, потом через донат и штаны выходим на А. Один игрок фейкает на рампе. Сложная но эффективная тактика.",
+      utility: ["4× смока", "3× флешки", "1-2× молотова"],
+      buy: "5× AK + AWP опц., броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — мид (смокер)", task: "Инста-смок на окно. Занимает мид, контролит редрум." },
+        { role: "Игрок 2 — мид → штаны → А", task: "Через мид в штаны. Кидает смок на девятку (хэвен). Заходит на А." },
+        { role: "Игрок 3 — А мейн (энтри)", task: "Через А мейн на плент. Молотов на храм. Заходит одновременно с мидовыми." },
+        { role: "Игрок 4 — А мейн (саппорт)", task: "За Игроком 3. Флешка на плент. Чистит тройку и икс." },
+        { role: "Игрок 5 — фейк Б / лурк", task: "Шумит на рампе (фейк Б). Потом лурк мида от перетяжки." },
+      ],
+      execute: [
+        "Игрок 1 кидает инста-смок на окно",
+        "Игрок 5 шумит на рампе — фейк Б",
+        "Игроки 1-2 занимают мид, Игроки 3-4 идут в А мейн",
+        "Игрок 2 через штаны кидает смок на девятку",
+        "Игрок 3 кидает молотов на храм, Игрок 4 — флешку",
+        "Игроки 2 (из штанов) и 3-4 (из А мейна) заходят одновременно",
+        "Бомба на дефолт А. Постплант: тройка, донат, штаны",
+      ],
+      tips: [
+        "Смок на девятку обязателен — оттуда снайпер контролит весь плент",
+        "Молотов на храм выкуривает агрессивного опорника",
+        "Фейк на рампе работает хорошо — КТ на Ancient часто перетягиваются на Б",
+      ],
+    },
+  ],
+
+  "ancient-CT-pistol": [
+    {
+      id: "an-ct-p-1",
+      name: "Стандарт пистолетки",
+      diff: "easy",
+      tag: "База",
+      desc: "Стандартная расстановка: 2 на А, 1 на миду (окно), 2 на Б. На Ancient КТ — сильная сторона, используйте это.",
+      utility: ["1× смок", "1× моло", "1× флешка"],
+      buy: "USP × 5, броня всем",
+      players: [
+        { role: "Игрок 1 — А (икс/тройка)", task: "Главный холдер А. Сидит на иксе или за тройкой." },
+        { role: "Игрок 2 — А (девятка)", task: "Дальний холд А с девятки. AWP-позиция." },
+        { role: "Игрок 3 — окно (мид)", task: "Главная пушка раунда. Контролит мид из окна." },
+        { role: "Игрок 4 — Б (лонг)", task: "Холдер Б с позиции лонга. Контролит рампу." },
+        { role: "Игрок 5 — Б (кейв)", task: "Дальний холд Б. Может агрессивно пикнуть кейв." },
+      ],
+      execute: [
+        "Игрок 3 занимает окно — контролит весь мид",
+        "Игроки 1-2 занимают А, Игроки 4-5 — Б",
+        "При раше через А мейн — Игроки 1-2 в кросс, Игрок 3 через мид на помощь",
+        "При раше через рампу — Игроки 4-5 задерживают, Игрок 3 через мид на Б",
+        "Информация важнее килла",
+      ],
+      tips: [
+        "На Ancient КТ имеет преимущество — не геройствуйте, играйте стандартно",
+        "Окно — имба позиция. Игрок 3 должен жить и давать инфу",
+        "USP на дальних дистанциях бьёт лучше Glock — держите расстояние",
+      ],
+    },
+  ],
+
+  "ancient-CT-force": [
+    {
+      id: "an-ct-f-1",
+      name: "Агрессивный поджим мида",
+      diff: "medium",
+      tag: "Захват центра",
+      desc: "Двое агрессивно занимают мид (окно + редрум). На Ancient контроль мида для КТ — это контроль всей карты. Т не могут свободно ротироваться.",
+      utility: ["2× смока", "2× флешки"],
+      buy: "MP9 × 2-3, Deagle × 1, броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — окно", task: "Занимает окно. Контролит топ мид и штаны." },
+        { role: "Игрок 2 — редрум", task: "Занимает редрум. Контролит другую сторону мида." },
+        { role: "Игрок 3 — А (тройка)", task: "Стандартный холд А." },
+        { role: "Игрок 4 — Б (лонг)", task: "Стандартный холд Б." },
+        { role: "Игрок 5 — ротация", task: "Между А и Б — ротируется по инфе." },
+      ],
+      execute: [
+        "Игроки 1-2 быстро занимают окно и редрум",
+        "Кидают смок/флешку если слышат давление с мида",
+        "Остальные стандартно держат сайты",
+        "При контакте в миду — собирают инфу и дают колл куда перетягиваться",
+      ],
+      tips: [
+        "Контроль мида на Ancient для КТ — это 70% победы в раунде",
+        "Если Т забросали мид утилкой — отступайте, не стойте",
+        "MP9 в окне на близких углах — очень сильно",
+      ],
+    },
+  ],
+
+  "ancient-CT-fullbuy": [
+    {
+      id: "an-ct-fb-1",
+      name: "Стандарт 2-1-2",
+      diff: "easy",
+      tag: "База Ancient",
+      desc: "Классика: 2 на А (икс/тройка + девятка), 1 на миду (окно с AWP), 2 на Б (лонг + кейв). Мидовый AWP — ключ к карте.",
+      utility: ["5× смоков", "4× флешки", "3× молотова"],
+      buy: "5× M4 + AWP в окне, броня + шлем всем",
+      players: [
+        { role: "А1 — икс/тройка", task: "Главный холдер А. Молотов в А мейн при давлении. Контролит выход." },
+        { role: "А2 — девятка (хэвен)", task: "AWP или M4 с девятки. Дальний холд, контролит весь А плент." },
+        { role: "Мид — окно (AWP)", task: "Главная пушка карты. AWP из окна контролит весь мид. Сейвите его." },
+        { role: "Б1 — лонг", task: "Контроль рампы с позиции лонга. Молотов на рампу при давлении." },
+        { role: "Б2 — кейв/шорт", task: "Дальний холд Б. Контролит кейв и может пикнуть агрессивно." },
+      ],
+      execute: [
+        "Мид-AWP сразу занимает окно",
+        "А1 кидает молотов в А мейн для делея",
+        "Б1 контролит рампу, готов кинуть смок при давлении",
+        "При раше А: А1 и А2 в кроссе, Мид через донат на помощь",
+        "При раше Б: Б1 и Б2 задерживают, Мид через мясо на Б",
+        "Ротация только по подтверждённой инфе — на Ancient фейки частые",
+      ],
+      tips: [
+        "AWP в окне — главная пушка. Если AWP погиб — раунд сильно осложняется",
+        "На Ancient КТ выигрывают ~55% раундов — играйте стандартно и не рискуйте",
+        "Молотовы на входы (А мейн, рампа) — обязательный рутин каждого раунда",
+        "Не перетягивайтесь по одному контакту — фейки на Ancient очень частые",
+      ],
+    },
+  ],
+
+  // ==========================================================
+  // ============== ANUBIS ====================================
+  // ==========================================================
+
+  "anubis-T-pistol": [
+    {
+      id: "a-t-p-1",
+      name: "Быстрый выход на А",
+      diff: "easy",
+      tag: "Пистолетная классика",
+      desc: "Быстрый заход на А через А-мейн. На Анубисе атака по таймингам успевает занять мейн раньше КТ, если бежит сразу. Одна флешка и дым — и вы на пленте.",
+      utility: ["1× смок (хэвен/девятка)", "1× флешка"],
+      buy: "5× Glock + 1× смок + 1× флешка + броня (2-3 игрокам)",
+      players: [
+        { role: "Игрок 1 — энтри", task: "Первый через А-мейн. Чистит фонтан и стэйрс." },
+        { role: "Игрок 2 — смокер", task: "Кидает смок на хэвен (девятку) — отрезает снайпера защиты." },
+        { role: "Игрок 3 — флешер", task: "Кидает флешку на плент перед выходом команды." },
+        { role: "Игрок 4 — добив", task: "За Игроком 1, добивает. Чистит углы." },
+        { role: "Игрок 5 — бомба + мид контроль", task: "Контролит мид чтобы КТ не зашли с фланга. Потом подходит с бомбой." },
+      ],
+      execute: [
+        "Игроки 1-4 максимально быстро бегут в А-мейн",
+        "Игрок 2 кидает смок на девятку (хэвен) — отрезает дальний холд КТ",
+        "Игрок 3 кидает флешку на плент",
+        "Игрок 1 заходит первым, чистит фонтан и стэйрс",
+        "Игрок 5 контролит мид и подходит с бомбой после зачистки",
+        "Бомба на дефолт. Постплант: фонтан, стэйрс, А-мейн",
+      ],
+      tips: [
+        "На Анубисе атака по таймингам успевает на А раньше чем КТ — используйте это",
+        "Смок на хэвен обязателен — оттуда снайпер КТ контролит весь плент",
+        "Не лезьте через мид — там часто сидят с AWP",
+      ],
+    },
+  ],
+
+  "anubis-T-force": [
+    {
+      id: "a-t-f-1",
+      name: "Раш Б через Б-мейн",
+      diff: "easy",
+      tag: "Быстрый раш",
+      desc: "Все 5 быстро через Б-мейн на плент Б. На Анубисе Б-мейн узкий, но если забросить пару смоков и флешек — КТ не смогут задержать.",
+      utility: ["1-2× смока", "2× флешки"],
+      buy: "MAC-10 × 2-3, Tec-9, броня всем",
+      players: [
+        { role: "Игрок 1 — энтри (MAC-10)", task: "Первый через Б-мейн на плент." },
+        { role: "Игрок 2 — смокер", task: "Смок на хелпу (walkway) — отрезает перетяжку КТ." },
+        { role: "Игрок 3 — флешер", task: "Две флешки через стену на плент перед выходом." },
+        { role: "Игрок 4 — добив", task: "За Игроком 1, добивает. Чистит подиум и нычку." },
+        { role: "Игрок 5 — бомба", task: "Последний, ставит бомбу." },
+      ],
+      execute: [
+        "Все 5 бегут к Б-мейну",
+        "Игрок 2 кидает смок на хелпу (блокирует ротацию КТ)",
+        "Игрок 3 кидает две флешки через стену",
+        "Игрок 1 заходит первым после флешки",
+        "Остальные за ним, чистим плент",
+        "Бомба на дефолт Б. Постплант: подиум, нычка, Б-мейн",
+      ],
+      tips: [
+        "MAC-10 на узком Б-мейне — топ. Углы близкие",
+        "Смок на хелпу критичен — без него КТ с А прибегут через 5 секунд",
+      ],
+    },
+  ],
+
+  "anubis-T-fullbuy": [
+    {
+      id: "a-t-fb-1",
+      name: "Выход на Б через мид",
+      diff: "medium",
+      tag: "Контроль мида → Б",
+      desc: "Берём контроль мида смоком на коннектор, потом через воду или мост выходим на Б. Один игрок шумит на А-мейне как фейк.",
+      utility: ["3× смока", "3× флешки", "1× молотов"],
+      buy: "5× AK + броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — мид контроль", task: "Кидает смок на коннектор с респа (джамптроу). Занимает мид." },
+        { role: "Игрок 2 — вода → Б", task: "Через воду (канал) проходит к Б пленту. Заходит с фланга." },
+        { role: "Игрок 3 — мост → Б", task: "Через мост на Б. Кидает смок на хелпу." },
+        { role: "Игрок 4 — энтри Б", task: "Через Б-мейн одновременно с мидовыми игроками. Флешка на плент." },
+        { role: "Игрок 5 — фейк А", task: "Шумит на А-мейне — стреляет, кидает декой/гранату. Отвлекает КТ. Потом лурк." },
+      ],
+      execute: [
+        "Игрок 1 с респа кидает смок на коннектор (джамптроу)",
+        "Игрок 5 шумит на А-мейне — фейк",
+        "Игроки 1-3 занимают мид, Игрок 2 идёт через воду к Б",
+        "Игрок 3 через мост, кидает смок на хелпу",
+        "Игрок 4 через Б-мейн, флешка на плент",
+        "Все заходят на Б одновременно с трёх направлений",
+        "Бомба на дефолт Б. Постплант: подиум, Б-мейн, мид",
+      ],
+      tips: [
+        "Смок на коннектор с респа — это основа. Без него КТ увидят ваше движение",
+        "Декой на А-мейне — дешёвый но эффективный фейк, КТ часто ведутся",
+        "Контроль мида на Анубисе — ключ к обоим плентам",
+      ],
+    },
+    {
+      id: "a-t-fb-2",
+      name: "Сплит А",
+      diff: "hard",
+      tag: "Атака с двух сторон",
+      desc: "Сплит на А: через А-мейн и через мид → аллею. Смоки на хэвен, камеру и коннектор. Синхронный заход ломает оборону КТ.",
+      utility: ["4× смока", "3× флешки", "1-2× молотова"],
+      buy: "5× AK + AWP опц., броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — А-мейн (энтри)", task: "Главный энтри через А-мейн. Выходит на сайт после раскида." },
+        { role: "Игрок 2 — А-мейн (саппорт)", task: "За Игроком 1. Кидает смок на хэвен (девятку) и молотов на фонтан." },
+        { role: "Игрок 3 — мид → аллея", task: "Через мид идёт в аллею. Заходит на А с фланга одновременно с мейновыми." },
+        { role: "Игрок 4 — мид (смоки)", task: "Кидает смок на коннектор и смок на камеру. Контролит мид." },
+        { role: "Игрок 5 — Б фейк / лурк", task: "Шумит у Б-мейна (фейк). Потом лурк на миду от перетяжки." },
+      ],
+      execute: [
+        "Игрок 4 кидает смок на коннектор с респа",
+        "Игрок 5 шумит у Б-мейна — фейк Б",
+        "Игроки 1-2 идут в А-мейн, Игроки 3-4 на мид",
+        "Игрок 4 кидает смок на камеру, Игрок 2 — смок на хэвен",
+        "Игрок 2 кидает молотов на фонтан — выкуриваем защитника",
+        "Игрок 3 из аллеи и Игроки 1-2 из А-мейна заходят одновременно",
+        "Бомба на дефолт А. Постплант: стэйрс, фонтан, аллея",
+      ],
+      tips: [
+        "Синхронность захода критична — если мейн зайдёт раньше, КТ сфокусируются на одном направлении",
+        "Смок на хэвен обязателен — оттуда снайпер контролит весь плент",
+        "Фейк на Б работает хорошо — КТ на Анубисе часто перетягиваются быстро",
+      ],
+    },
+  ],
+
+  "anubis-CT-pistol": [
+    {
+      id: "a-ct-p-1",
+      name: "Стандарт пистолетки",
+      diff: "easy",
+      tag: "База",
+      desc: "Стандартная расстановка: контроль мида, по 2 на каждом сайте. На Анубисе мид — ключевая зона, кто его контролит — тот диктует темп.",
+      utility: ["1× смок (мид)", "1× моло", "1× флешка"],
+      buy: "USP × 5, броня всем",
+      players: [
+        { role: "Игрок 1 — А (стэйрс)", task: "Сидит на стэйрсе или у фонтана. Контролит А-мейн." },
+        { role: "Игрок 2 — А (девятка/хэвен)", task: "Дальний холд А с девятки. Поддерживает Игрока 1." },
+        { role: "Игрок 3 — мид (камера)", task: "Контролит мид из камеры. Кидает инста-смок на мид с респа. Главная пушка раунда." },
+        { role: "Игрок 4 — Б (подиум)", task: "Сидит на подиуме Б. Контролит Б-мейн." },
+        { role: "Игрок 5 — Б (бэксайт)", task: "Дальний холд Б. Страхует Игрока 4." },
+      ],
+      execute: [
+        "Игрок 3 кидает инста-смок на мид с респа",
+        "Игроки 1-2 занимают А, Игроки 4-5 — Б",
+        "Игрок 3 контролит мид из камеры или храма",
+        "При раше через А-мейн — Игроки 1-2 в кросс, Игрок 3 помогает через коннектор",
+        "При раше через Б-мейн — Игроки 4-5 задерживают, Игрок 3 через мид на помощь",
+        "Информация важнее килла — давайте коллы",
+      ],
+      tips: [
+        "Инста-смок на мид с респа — обязательно. Без него Т займут мид бесплатно",
+        "На Анубисе перетяжки быстрые — играйте от информации",
+        "USP точнее Glock — держите дистанцию",
+      ],
+    },
+  ],
+
+  "anubis-CT-force": [
+    {
+      id: "a-ct-f-1",
+      name: "Агрессивный контроль мида",
+      diff: "medium",
+      tag: "Захват центра",
+      desc: "Двое агрессивно занимают мид (камера + храм), создавая давление. На Анубисе мид критичен — если КТ его контролит, Т не могут свободно перетягиваться.",
+      utility: ["2× смока", "2× флешки", "1× моло"],
+      buy: "MP9 × 2-3, Deagle × 1, броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — камера", task: "Занимает камеру. Контролит мост и воду." },
+        { role: "Игрок 2 — храм", task: "Занимает храм (синяя зона). Контролит коннектор." },
+        { role: "Игрок 3 — А (стэйрс)", task: "Стандартный холд А." },
+        { role: "Игрок 4 — Б (подиум)", task: "Стандартный холд Б." },
+        { role: "Игрок 5 — ротация", task: "Между А и Б — ротируется по инфе от мидовых игроков." },
+      ],
+      execute: [
+        "Игроки 1-2 быстро занимают камеру и храм — две ключевые позиции мида",
+        "Кидают смок на коннектор или мост чтобы обезопасить фланг",
+        "При контакте в миду — собирают инфу и отступают или бьют",
+        "Игроки 3-4 стандартно держат сайты",
+        "Игрок 5 ротируется по коллу мидовых",
+      ],
+      tips: [
+        "Камера и храм — самые неудобные позиции для Т на миду. Из них сложно выбить",
+        "Если Т забросали мид утилкой — не стойте, отступайте. Мид вернёте позже",
+        "MP9 на близких углах мида работает отлично",
+      ],
+    },
+  ],
+
+  "anubis-CT-fullbuy": [
+    {
+      id: "a-ct-fb-1",
+      name: "Стандарт 2-1-2",
+      diff: "easy",
+      tag: "База Anubis",
+      desc: "Классическая расстановка: 2 на А, 1 на миду, 2 на Б. Мидовый игрок — ключ к карте, он даёт инфу и решает куда ротировать.",
+      utility: ["5× смоков", "4× флешки", "3× молотова"],
+      buy: "5× M4 + AWP, броня + шлем всем",
+      players: [
+        { role: "А1 — стэйрс/фонтан", task: "Главный холдер А. Контролит А-мейн. Молотов в мейн при давлении." },
+        { role: "А2 — девятка/хэвен", task: "AWP с девятки. Дальний холд А, контролит весь плент." },
+        { role: "Мид — камера", task: "Ключевой игрок. Инста-смок на мид с респа. Контролит мост, воду, коннектор. Даёт инфу всей команде." },
+        { role: "Б1 — подиум", task: "Главный холдер Б. Контролит Б-мейн." },
+        { role: "Б2 — бэксайт", task: "Дальний холд Б. Может играть хелпу для контроля фланга." },
+      ],
+      execute: [
+        "Мид кидает инста-смок сразу с респа",
+        "А2 занимает девятку с AWP",
+        "Б1 кидает молотов в Б-мейн для делея",
+        "При раше А: А1 и А2 в кроссе, Мид помогает через коннектор",
+        "При раше Б: Б1 задерживает, Мид через воду на помощь",
+        "При контроле мида Т: Мид отступает, кидает смок. Не геройствует",
+      ],
+      tips: [
+        "На Анубисе мид = карта. Мидовый игрок — самый важный. Он должен жить и давать инфу",
+        "Инста-смок на мид с респа обязателен каждый раунд",
+        "Перетяжки на Анубисе быстрые — не ротируйтесь по одному контакту, ждите подтверждения",
+        "AWP с девятки — имба позиция. Контролит весь А плент",
+      ],
+    },
+  ],
+
+  // ==========================================================
+  // ============== INFERNO ==================================
+  // ==========================================================
+
+  // ----- Т — ПИСТОЛЕТКА -----
+  "inferno-T-pistol": [
+    {
+      id: "i-t-p-1",
+      name: "Быстрый выход на А через апсы",
+      diff: "easy",
+      tag: "Пистолетная классика",
+      desc: "Тройка максимально быстро занимает апартаменты, двое идут в мид и поддерживают флешкой. На пистолетке нужна лишь одна флешка и дым — никаких лишних затрат.",
+      utility: ["1× смок", "1× флешка"],
+      buy: "5× Glock + 1× смок + 1× флешка + броня (2-3 игрокам)",
+      players: [
+        { role: "Игрок 1 — энтри апсов", task: "Первый бежит в апсы как можно быстрее. Проверяет бойлер. Выходит на балкон." },
+        { role: "Игрок 2 — добив (апсы)", task: "За Игроком 1 в апсы. Добивает по контакту." },
+        { role: "Игрок 3 — бомба (апсы)", task: "Третий в апсы. Несёт бомбу, ставит после зачистки." },
+        { role: "Игрок 4 — мид (флешка)", task: "Идёт в мид. Убедившись что мид пуст, накидывает флешку в А сайт для поддержки тиммейтов." },
+        { role: "Игрок 5 — мид (прикрытие)", task: "Прикрывает Игрока 4 в миду. Контролит возможный пуш с банана." },
+      ],
+      execute: [
+        "Игроки 1-3 максимально быстро бегут в апсы (через секонд мид)",
+        "Игроки 4-5 идут в мид, проверяют что пуш от КТ нет",
+        "Игрок 4 из мида кидает флешку в А сайт через стену",
+        "Игрок 5 прикрывает Игрока 4",
+        "Игроки 1-3 по флешке выходят из апсов на балкон → плент А",
+        "Чистим яму, пески, навес. Бомба в дефолт. Постплант: яма, балкон, навес",
+      ],
+      tips: [
+        "Работает в основном на пистолетках — минимальные затраты, максимальная скорость",
+        "Если в апсах уже сидит КТ — не лезьте, отступайте и идите через мид или на Б",
+        "На пистолетке USP бьёт точнее Glock на дистанции — не стреляйтесь на дальних углах",
+      ],
+    },
+    {
+      id: "i-t-p-2",
+      name: "Раш Б через банан",
+      diff: "easy",
+      tag: "Раш Б",
+      desc: "Все 5 быстро на банан и врываются на Б. Простой как лопата, но работает, особенно если КТ не ждут ранний раш.",
+      utility: ["1× смок (гробы)", "1-2× флешки"],
+      buy: "5× Glock + 1× смок + 1-2× флешки + броня (2-3 игрокам)",
+      players: [
+        { role: "Игрок 1 — энтри", task: "Первый на банан. Чистит бочки и машину." },
+        { role: "Игрок 2 — смокер", task: "Кидает смок на гробы перед выходом на плент." },
+        { role: "Игрок 3 — флешер", task: "Кидает флешку через стену банана на плент." },
+        { role: "Игрок 4 — добив", task: "За первой волной. Чистит тройку и кафель." },
+        { role: "Игрок 5 — бомба", task: "Последний. Ставит бомбу на кафеле." },
+      ],
+      execute: [
+        "Все 5 быстро бегут на банан",
+        "Игрок 2 кидает смок на гробы (блокирует видимость из глубины плента)",
+        "Игрок 3 кидает флешку через стену банана на плент",
+        "Игрок 1 первым забегает на плент, чистит машину и бочки",
+        "Остальные за ним, добиваем. Бомба на кафеле",
+        "Постплант: банан (слушаем ретейк), тройка, гробы",
+      ],
+      tips: [
+        "КТ часто кидают молотов на банан в начале раунда — подождите пару секунд или возьмите смок чтобы потушить",
+        "Не забывайте про бусты слева при входе на Б — там часто прячутся",
+      ],
+    },
+  ],
+
+  // ----- Т — ФОРС -----
+  "inferno-T-force": [
+    {
+      id: "i-t-f-1",
+      name: "Контакт Б через банан",
+      diff: "easy",
+      tag: "Стандартный форс",
+      desc: "Всей толпой на банан, занимаем позиции и заходим по контакту. MAC-10 и Tec-9 на банане работают отлично — углы близкие.",
+      utility: ["1× смок", "2× флешки", "1× моло"],
+      buy: "MAC-10 × 2-3, Tec-9, броня всем",
+      players: [
+        { role: "Игрок 1 — энтри (MAC-10)", task: "Первый на банан. Чистит бочки, под флешку заходит на плент." },
+        { role: "Игрок 2 — молотовщик", task: "Кидает молотов на машину Б чтобы выкурить КТ." },
+        { role: "Игрок 3 — смокер", task: "Смок на гробы или КТ." },
+        { role: "Игрок 4 — флешер", task: "Две флешки через стену на плент." },
+        { role: "Игрок 5 — бомба", task: "Последний. Бомба после зачистки." },
+      ],
+      execute: [
+        "Все 5 на банан. Двое (Игроки 4-5) чекают мид и секонд мид на пуш КТ",
+        "Если мид чисто — все стягиваются на банан",
+        "Игрок 2 кидает молотов на машину Б",
+        "Игрок 3 кидает смок на гробы",
+        "Игрок 4 кидает флешки через стену банана",
+        "Игрок 1 заходит первым, остальные за ним",
+        "Бомба на кафеле. Постплант стандартный",
+      ],
+      tips: [
+        "MAC-10 на банане — топ. Углы близкие, скорострельность решает",
+        "Если КТ закинули молотов на банан в начале — подождите, не лезьте в огонь",
+      ],
+    },
+  ],
+
+  // ----- Т — ФУЛБАЙ -----
+  "inferno-T-fullbuy": [
+    {
+      id: "i-t-fb-1",
+      name: "Полная раскидка Б (от Astralis)",
+      diff: "medium",
+      tag: "Тактика от Astralis",
+      desc: "Классический заход на Б от Astralis 2018-2021. Трое полностью занимают банан, кидают три смока (вход в плент, гробы, КТ) и спокойно заходят. Плент полностью засмочен — КТ ничего не видят.",
+      utility: ["3× смока", "2× флешки", "1-2× молотова"],
+      buy: "5× AK + броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — банан лидер", task: "Первый на банан. Чистит бочки, занимает позицию для раскида." },
+        { role: "Игрок 2 — смокер 1", task: "Кидает смок на вход в Б плент (блокирует видимость КТ с многих позиций)." },
+        { role: "Игрок 3 — смокер 2", task: "Кидает смок на гробы и смок на КТ. Может также кинуть молик между Б3 и Б2." },
+        { role: "Игрок 4 — мид контроль", task: "Чекает мид и секонд мид на пуш КТ. Если чисто — стягивается на банан." },
+        { role: "Игрок 5 — мид контроль 2 / бомба", task: "С Игроком 4 чекает мид. Потом стягивается на банан с бомбой." },
+      ],
+      execute: [
+        "Игроки 1-3 полностью занимают банан",
+        "Игроки 4-5 чекают мид и секонд мид на пуш КТ",
+        "Если мид чисто — все 5 стягиваются на банан",
+        "С банана три смока: вход в Б, гробы, КТ — плент полностью засмочен",
+        "Опционально: молотов между Б3 и Б2 чтобы выкурить защитника",
+        "Под флешки заходим на плент, стоя на кафеле распикиваем каждую точку",
+        "Не забываем про бусты при входе на Б слева и со стороны КТ",
+        "Бомба ставим, держим плент. Ретейк Инферно Б — очень тяжёлый для КТ",
+      ],
+      tips: [
+        "Плент Б на Инферно — один из самых тяжёлых для ретейка. Если поставили бомбу — у вас огромное преимущество",
+        "Не забывайте про буст-позиции: слева при входе и со стороны КТ — там часто прячутся",
+        "Вариантов смоков на каждую точку много — подбирайте удобные для себя и тренируйте",
+      ],
+    },
+    {
+      id: "i-t-fb-2",
+      name: "Сплит А",
+      diff: "hard",
+      tag: "Дефолт про-команд",
+      desc: "Сплит на А через лонг, шорт и апартаменты. Практически дефолтная тактика профессиональных команд. Два дыма с секонда (арка, библиотека), один с мида в сайт.",
+      utility: ["4× смока", "3× флешки", "1-2× молотова"],
+      buy: "5× AK + AWP опц., броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — лонг (через арку)", task: "Идёт через лонг. Под прикрытием смока в сайте зачищает плент. Чекает балкон." },
+        { role: "Игрок 2 — лонг (второй)", task: "За Игроком 1 через лонг. Страхует и добивает." },
+        { role: "Игрок 3 — шорт", task: "Идёт через шорт. Берёт на себя яму и балкон. Поджимает плент с другой стороны." },
+        { role: "Игрок 4 — шорт (второй)", task: "За Игроком 3 через шорт. Кидает один из смоков (арку или библиотеку) с секонд мида." },
+        { role: "Игрок 5 — апсы (лурк)", task: "Идёт в апартаменты как луркер и саппорт. Может накинуть флешку в тюрьму — слепит всех в сайте, но не заходящих через лонг." },
+      ],
+      execute: [
+        "Атакующие полностью занимают мид и секонд мид, контролят пуш с банана и апсов",
+        "С секонд мида два дыма: в арку и в библиотеку",
+        "С мида один игрок кидает смок в сайт между тюрьмой и сайтом (закрывает обзор из песков)",
+        "Сплит: двое через лонг, двое через шорт, один через апсы",
+        "Под прикрытием смока в сайте заходящие с лонга зачищают плент",
+        "Шортовые берут яму и балкон, поджимают сайт",
+        "Игрок в апсах кидает флешку в тюрьму и подходит с фланга",
+        "Бомба в дефолт. Постплант: яма, балкон, навес, апсы",
+      ],
+      tips: [
+        "При правильном исполнении ваши оппоненты даже засомневаются что КТ — сильная сторона на Инферно",
+        "Сплит на А — это всегда надёжный вариант, проверенный годами",
+        "Не забывайте про контроль банана — если КТ зайдут в спину через банан, сплит развалится",
+      ],
+    },
+  ],
+
+  // ----- КТ — ПИСТОЛЕТКА -----
+  "inferno-CT-pistol": [
+    {
+      id: "i-ct-p-1",
+      name: "Стандарт пистолетки",
+      diff: "easy",
+      tag: "База",
+      desc: "Стандартная расстановка: контролим банан, мид, апсы. Играем от информации и точных USP.",
+      utility: ["1× смок (банан)", "1× моло (банан)", "1× флешка"],
+      buy: "USP × 5, броня всем",
+      players: [
+        { role: "Игрок 1 — банан", task: "Бежит на банан с молотовом. Кидает молик на бочки чтобы задержать раш Т. Контролит верх банана." },
+        { role: "Игрок 2 — банан (второй)", task: "За Игроком 1 на банане. Помогает контролировать. После делея отступает на плент Б." },
+        { role: "Игрок 3 — А (яма/балкон)", task: "Сидит в яме или на балконе. Главная пушка А. Контролит апсы и лонг." },
+        { role: "Игрок 4 — мид/арка", task: "Контролит мид и арку. Поддерживает А." },
+        { role: "Игрок 5 — А (лонг)", task: "Сидит на лонге или в библиотеке. Помогает Игроку 3 держать А." },
+      ],
+      execute: [
+        "Игроки 1-2 быстро бегут на банан, Игрок 1 кидает молотов на бочки",
+        "Игроки 3-5 занимают позиции на А и в миду",
+        "Если Т рашат банан — Игроки 1-2 задерживают и отступают на Б плент",
+        "Если Т идут через апсы — Игроки 3-5 бьют в кросс на А",
+        "Информация важнее килла — давайте коллы",
+      ],
+      tips: [
+        "Молотов на банан в начале раунда — обязательный рутин. Без него Т заберут банан бесплатно",
+        "USP точнее Glock на дистанции — не лезьте в ближний бой",
+        "На пистолетке броня обязательна для всех",
+      ],
+    },
+  ],
+
+  // ----- КТ — ФОРС -----
+  "inferno-CT-force": [
+    {
+      id: "i-ct-f-1",
+      name: "Агрессивный пуш мида",
+      diff: "medium",
+      tag: "Эффект неожиданности",
+      desc: "Дерзкий пуш в мид двумя игроками — ловим Т которые не ожидают агрессии от КТ. Рифлер идёт к андеру (мексике), снайпер прикрывает. Если Т рашат банан — бьём в спины.",
+      utility: ["1× смок", "2× флешки", "1× моло"],
+      buy: "MP9 × 2-3, Deagle × 1, броня + шлем всем",
+      players: [
+        { role: "Игрок 1 — рифлер (мид → мексика)", task: "Подходит вплотную к андеру (мексике), становится за углом, не пикает. Ждёт отмашку от игрока на банане." },
+        { role: "Игрок 2 — снайпер (мид)", task: "С самым близким спавном к миду. Прикрывает Игрока 1 из мида." },
+        { role: "Игрок 3 — банан (флешки)", task: "Бежит на банан. Если Т на банане — даёт флешку Игроку 1 для агрессии. Кидает молотов на бочки." },
+        { role: "Игрок 4 — банан (второй)", task: "За Игроком 3 на банане. Помогает контролить." },
+        { role: "Игрок 5 — А (смок)", task: "Бежит на А со смоком. Держит апсы и лонг." },
+      ],
+      execute: [
+        "Игроки 1-2 быстро идут в мид. Игрок 2 (снайпер) прикрывает",
+        "Игрок 1 подходит к андеру (мексике), становится за углом и ждёт",
+        "Игроки 3-4 бегут на банан. Игрок 3 кидает молотов на бочки",
+        "Если Т идут на банан — Игрок 3 даёт флешку, Игрок 1 выходит из мексики в спины",
+        "Если Т идут на мид — Игрок 2 и 1 бьют в кросс",
+        "Если Т идут через апсы на А — Игрок 5 задерживает, остальные перетягиваются",
+      ],
+      tips: [
+        "Атакующие не всегда ожидают дерзких пушей от КТ — эффект неожиданности работает",
+        "Если Т уже заняли банан — не лезьте в мексику, вас убьют. Отступайте на сайт",
+        "Используйте эту тактику раз в полигры — иначе Т подстроятся",
+      ],
+    },
+  ],
+
+  // ----- КТ — ФУЛБАЙ -----
+  "inferno-CT-fullbuy": [
+    {
+      id: "i-ct-fb-1",
+      name: "Стандарт 3А-2Б",
+      diff: "easy",
+      tag: "База Inferno",
+      desc: "Классическая расстановка: 3 на А (яма, балкон, арка), 2 на Б (банан + плент). Банан — ключ к карте. Кто контролит банан — тот контролит темп раунда.",
+      utility: ["5× смоков", "4× флешки", "4× молотова"],
+      buy: "5× M4 + AWP, броня + шлем всем",
+      players: [
+        { role: "А1 — яма/балкон", task: "Главный холдер А. Сидит в яме или на балконе. Контролит апсы и лонг." },
+        { role: "А2 — арка/мид", task: "Арка или мид. Поддерживает А и контролит ротации через мид." },
+        { role: "А3 — апсы/бойлер", task: "Контролит апсы. Кидает ранний молотов в окно апсов для делея. Может играть бойлер." },
+        { role: "Б1 — банан", task: "Главный контролёр банана. Молотов на бочки в начале раунда обязателен. Смок на банан при давлении. Задерживает пуш и отступает на плент." },
+        { role: "Б2 — плент Б", task: "Сидит на пленте Б (гробы, тройка). Страхует Б1 и готов к ретейку." },
+      ],
+      execute: [
+        "Б1 сразу бежит на банан и кидает молотов на бочки — это обязательный рутин",
+        "А3 кидает молотов в окно апсов для делея",
+        "А2 контролит арку и мид",
+        "При раше банана: Б1 задерживает утилкой, отступает на плент. Б2 страхует",
+        "При атаке через апсы: А1 и А3 в кроссе, А2 помогает из арки",
+        "Ротация только по точному коллу — на Инферно фейки очень частые",
+      ],
+      tips: [
+        "Банан — это карта. Кто контролит банан — контролит темп раунда",
+        "Молотов на бочки банана в начале каждого раунда — обязательно. Без этого Т заберут банан бесплатно",
+        "Инферно — самая тяжёлая карта для ретейков. Если Т поставили бомбу — часто лучше сейвнуть чем лезть",
+        "Не ротируйтесь по одному контакту — на Инферно очень любят фейки",
+      ],
+    },
+    {
+      id: "i-ct-fb-2",
+      name: "Умеренно-агрессивное принятие Б пуша",
+      diff: "medium",
+      tag: "Контроль банана",
+      desc: "Два игрока агрессивно занимают банан с гранатами в начале раунда, потом отступают. Создаёт иллюзию контроля и заставляет Т ошибаться.",
+      utility: ["3× смоков", "3× флешки", "3× молотова"],
+      buy: "5× M4 + AWP, броня + шлем всем",
+      players: [
+        { role: "Б1 — агрессия банана", task: "Первый на банан с молотовом и флешкой. Агрессивный контроль верхней части банана." },
+        { role: "Б2 — саппорт банана", task: "За Б1. Помогает контролировать. После нескольких секунд оба отступают обратно на плент." },
+        { role: "Б3 — плент Б (фланг)", task: "Сидит в закрытой позиции на пленте Б. Когда Т начинают атаку — неожиданно выходит с фланга." },
+        { role: "А1 — яма/балкон", task: "Стандартный холд А." },
+        { role: "А2 — арка/мид", task: "Контроль мида и арки. Поддержка А." },
+      ],
+      execute: [
+        "Б1 и Б2 агрессивно бегут на банан, кидают молотов на бочки и флешку",
+        "Контролируют верх банана несколько секунд, собирают инфу",
+        "Отступают обратно на плент Б — создают иллюзию что банан под контролем",
+        "Т думают что КТ ещё на банане и ждут или ошибаются при продвижении",
+        "Б3 сидит в закрытой позиции — когда Т заходят на плент, выходит с фланга",
+        "А1 и А2 стандартно держат А, ротируются по инфе",
+      ],
+      tips: [
+        "Контроль банана с поздним возвращением создаёт иллюзию и заставляет Т тратить ресурсы",
+        "Б3 (фланговый) — главный сюрприз. Его позиция должна быть закрытой до момента атаки",
+        "Не оставайтесь на банане слишком долго — если Т рашат, вас перестреляют",
+      ],
+    },
+  ],
+
   // ==========================================================
   // ============== DUST 2 ====================================
   // ==========================================================
@@ -1366,7 +2645,6 @@ const TACTICS = {
       name: "Сплит А",
       diff: "medium",
       tag: "База ММ и FACEIT",
-      video: "https://youtube.com/watch?v=iGfn8Mhdab4",
       desc: "Базовая фулбай-тактика на А. Трое идут лонг, двое через шорт. Зажимаем сайт с двух сторон — у защиты А мало шансов удержать.",
       utility: ["3-4× смока", "3× флешки", "1× молотов"],
       buy: "5× AK + AWP опц., броня + шлем всем",
@@ -1398,7 +2676,6 @@ const TACTICS = {
       name: "Сплит Б (Mid-to-B)",
       diff: "hard",
       tag: "Окружение через два входа",
-      video: "https://youtube.com/watch?v=-paYrikdzSU",
       desc: "Заходим на Б с двух сторон одновременно: один игрок из верхней темки, остальные через мид → нижнюю темку → плент. Ломает крестовой огонь защиты.",
       utility: ["3× смока", "2× флешки", "1× молотов"],
       buy: "5× AK + броня + шлем всем",
@@ -1727,11 +3004,18 @@ function viewMapStep() {
     <div class="step-label">// STEP 01</div>
     <h2 class="step-title">Выбери <span class="accent">карту</span></h2>
     <div class="card-list">${cards}</div>
-    <div class="intro-note">// Сейчас доступны Mirage и Dust 2. Остальные карты — в разработке.</div>
+    <div class="intro-note">// Все 7 карт маппула: Mirage, Dust 2, Inferno, Anubis, Ancient, Nuke, Overpass</div>
   </div>`;
 }
 
 function viewSideStep() {
+
+    const videos = MAP_VIDEOS[state.map.id] || [];
+    const videoList = videos.map(v =>
+      '<a href="' + v.url + '" target="_blank" style="display:flex;align-items:center;gap:10px;color:#fcd34d;font-family:ui-monospace,monospace;font-size:12px;text-decoration:none;border:1px solid #a16207;padding:10px 14px;background:rgba(66,32,6,0.3);line-height:1.3">▶ ' + esc(v.title) + '</a>'
+    ).join('');
+    const videoSection = videos.length > 0 ? '<div class="section-box" style="margin-bottom:16px"><div class="section-label" style="color:#fcd34d">// ВИДЕО РАСКИДОК</div><div style="display:flex;flex-direction:column;gap:8px">' + videoList + '</div></div>' : '';
+
   return `<div>
     <div class="step-label">// STEP 02</div>
     <h2 class="step-title">За кого <span class="accent">играешь</span>?</h2>
@@ -1761,6 +3045,7 @@ function viewSideStep() {
         </div>
       </button>
     </div>
+    ${videoSection}
   </div>`;
 }
 
@@ -1845,7 +3130,6 @@ function viewListStep() {
 function viewDetailStep() {
   const t = state.tactic;
   const tagHtml = t.tag ? `<div class="detail-tag">// ${esc(t.tag)}</div>` : '';
-  const videoHtml = t.video ? '<div class="section-box"><div class="section-label">// ВИДЕО РАСКИДКИ</div><a href="' + t.video + '" target="_blank" style="display:inline-flex;align-items:center;gap:8px;color:#fcd34d;font-family:ui-monospace,monospace;font-size:13px;text-decoration:none;border:1px solid #a16207;padding:10px 14px;background:rgba(66,32,6,0.3)">▶ Смотреть раскидки на YouTube</a></div>' : '';
   const buyHtml = t.buy ? `<div class="section-box buy">
     <div class="section-label">// ЗАКУП</div>
     <div class="buy-text">${esc(t.buy)}</div>
@@ -1884,7 +3168,6 @@ function viewDetailStep() {
       ${getMapDiagramSVG(state.map.id)}
     </div>
     ${buyHtml}
-    ${videoHtml}
     <div class="section-box">
       <div class="section-label">// УТИЛКА КОМАНДЫ</div>
       <div class="tactic-utility" style="padding-left:0;margin-top:0">${utility}</div>
